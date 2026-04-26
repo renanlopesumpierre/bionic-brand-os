@@ -1,0 +1,416 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "meta": {
+    "project": "Betina Weber",
+    "source": "Framer MCP + análise betinaweber.com rascunho pessoal",
+    "extractedAt": "2026-04-24",
+    "version": "1.1.0",
+    "changelog": {
+      "v1.1": [
+        "Dark migrou de #080808 (cool) para #1C1917 (warm black)",
+        "Cream (#F5F0EA) introduzido como texto-on-dark padrão, substituindo white puro",
+        "Accent (#A6783E) introduzido — bronze maduro, primeira cor de acento do sistema",
+        "Accent calibrado a partir do âmbar #CA8A04 (96% sat) do rascunho pessoal da Betina, dessaturado pra ~60% para preservar autoridade calma",
+        "Protocolo estrito de uso do Accent definido (seção component.accent.rules)",
+        "Border-on-dark migrou de rgba(255,255,255,0.1) para rgba(245,240,234,0.1) usando cream"
+      ]
+    }
+  },
+  "color": {
+    "surface": {
+      "primary":     { "value": "#FFFFFF", "framerPath": "/Light" },
+      "pure":        { "value": "#FFFFFF", "framerPath": "/White", "notes": "Reservado a contextos light, não usar sobre Dark" },
+      "cream":       { "value": "#F5F0EA", "framerPath": "/Cream", "notes": "v1.1 NOVO — texto/detalhes sobre /Dark" },
+      "canvas":      { "value": "#E5E4DE", "framerPath": "/Background", "description": "Bege pedra, cor-âncora do projeto" },
+      "inverse":     { "value": "#1C1917", "framerPath": "/Dark", "notes": "v1.1 — warm black, era #080808" },
+      "inverseAlt":  { "value": "#080A09", "framerPath": "/Background Dark", "notes": "Reserva não utilizada" }
+    },
+    "accent": {
+      "default": { "value": "#A6783E", "framerPath": "/Accent", "notes": "v1.1 NOVO — bronze maduro, ~60% saturação" },
+      "subtle":  { "value": "rgba(166, 120, 62, 0.60)", "framerPath": "/Accent Subtle", "notes": "Hover states e transições" },
+      "faint":   { "value": "rgba(166, 120, 62, 0.10)", "framerPath": "/Accent Faint", "notes": "Highlights de fundo editorial raríssimos" }
+    },
+    "border": {
+      "onLight": { "value": "rgba(22, 35, 27, 0.16)", "framerPath": "/Border Dark" },
+      "onDark":  { "value": "rgba(245, 240, 234, 0.10)", "framerPath": "/Border Light", "notes": "v1.1 — usa cream em vez de white puro" }
+    },
+    "overlay": {
+      "onDark":   { "value": "rgba(245, 240, 234, 0.16)", "framerPath": "/Background Transparent", "notes": "v1.1 — cream alpha em vez de white alpha" },
+      "dimDark":  { "value": "rgba(22, 35, 27, 0.60)", "framerPath": "/Transparent Dark" },
+      "dimLight": { "value": "rgba(255, 252, 245, 0.50)", "framerPath": "/Transparent Light" },
+      "reset":    { "value": "rgba(40, 44, 41, 0)", "framerPath": "/Transparent" }
+    },
+    "text": {
+      "onLight":  { "value": "#1C1917", "notes": "v1.1 — warm black em vez de cool" },
+      "onDark":   { "value": "#F5F0EA", "notes": "v1.1 — cream em vez de white puro" },
+      "onCanvas": { "value": "#1C1917" },
+      "muted":    { "value": "rgba(35, 31, 32, 0.50)", "framerPath": "/Muted" }
+    },
+    "feedback": {
+      "error": { "value": "rgba(255, 34, 68, 0.15)", "framerPath": "/Error" }
+    }
+  },
+  "colorDecisionRationale": {
+    "rejectedPaths": [
+      {
+        "path": "Saturated accent #CA8A04 (Betina's raw draft)",
+        "reason": "96% saturação escorrega pra mostarda em monitores diferentes; CTA sólido em âmbar saturado contradiz vetor verbal 'autoridade calma'"
+      },
+      {
+        "path": "Monochromatic rigor (v1.0 original)",
+        "reason": "Ausência total de acento deixa marca genérica dentro da categoria advisory premium; monocromático puro é padrão de estúdio de design, não de board advisor"
+      }
+    ],
+    "adoptedPath": {
+      "name": "Hybrid calibrated",
+      "description": "Paleta warm + accent bronze dessaturado usado só como assinatura editorial",
+      "achieves": "Preserva autoridade calma, ganha reconhecimento cromático, respeita intenção original refinando execução"
+    }
+  },
+  "font": {
+    "family": {
+      "serif": { "value": "Spectral, 'Times New Roman', Georgia, serif" },
+      "sans":  { "value": "'TASA Orbiter', Inter, ui-sans-serif, system-ui, sans-serif" }
+    },
+    "weight": {
+      "serif200": { "value": 200 },
+      "serif300": { "value": 300 },
+      "sans400":  { "value": 400 },
+      "sans500":  { "value": 500 }
+    },
+    "rejectedAlternative": {
+      "alt": "Playfair Display + Inter (rascunho pessoal)",
+      "reason": "Playfair é onipresente em advisory firms (genérico); Spectral posiciona como singular. Inter é funcional mas sem caráter; TASA Orbiter tem humanismo executivo."
+    }
+  },
+  "typography": {
+    "heading1":    { "framerPath": "/Heading 1",        "tag": "h1", "fontFamily": "serif", "fontWeight": 300, "fontSize": "112px", "lineHeight": "1.1em",  "letterSpacing": "-0.06em", "textAlign": "center", "paragraphSpacing": 0 },
+    "heading1b":   { "framerPath": "/Heading 1b",       "tag": "h1", "fontFamily": "serif", "fontWeight": 300, "fontSize": "77px",  "lineHeight": "1.1em",  "letterSpacing": "-0.06em", "textAlign": "center", "paragraphSpacing": 0 },
+    "heading2":    { "framerPath": "/Heading 2",        "tag": "h2", "fontFamily": "serif", "fontWeight": 300, "fontSize": "68px",  "lineHeight": "1.1em",  "letterSpacing": "-0.06em", "textAlign": "left",   "paragraphSpacing": 40 },
+    "heading3":    { "framerPath": "/Heading 3",        "tag": "h3", "fontFamily": "serif", "fontWeight": 300, "fontSize": "56px",  "lineHeight": "1.05em", "letterSpacing": "-0.04em", "textAlign": "left",   "paragraphSpacing": 40 },
+    "heading4":    { "framerPath": "/Heading 4",        "tag": "h4", "fontFamily": "serif", "fontWeight": 300, "fontSize": "36px",  "lineHeight": "1.15em", "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 40 },
+    "heading4b":   { "framerPath": "/Heading 4b",       "tag": "h4", "fontFamily": "serif", "fontWeight": 300, "fontSize": "24px",  "lineHeight": "1.2em",  "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 40 },
+    "heading5":    { "framerPath": "/Heading 5",        "tag": "h5", "fontFamily": "serif", "fontWeight": 300, "fontSize": "22px",  "lineHeight": "1.2em",  "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 40 },
+    "heading6":    { "framerPath": "/Heading 6",        "tag": "h6", "fontFamily": "serif", "fontWeight": 200, "fontSize": "20px",  "lineHeight": "1.2em",  "letterSpacing": "-0.04em", "textAlign": "left",   "paragraphSpacing": 40 },
+    "display":     { "framerPath": "/Display",          "tag": "p",  "fontFamily": "serif", "fontWeight": 300, "fontSize": "78px",  "lineHeight": "1.2em",  "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 20 },
+    "body2xlSerif":{ "framerPath": "/Body 2XL - Serif", "tag": "p",  "fontFamily": "serif", "fontWeight": 300, "fontSize": "52px",  "lineHeight": "1.15em", "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 20 },
+    "bodyLarge":   { "framerPath": "/Body Large",       "tag": "p",  "fontFamily": "sans",  "fontWeight": 400, "fontSize": "20px",  "lineHeight": "1.3em",  "letterSpacing": "-0.02em", "textAlign": "left",   "paragraphSpacing": 20 },
+    "body":        { "framerPath": "/Body",             "tag": "p",  "fontFamily": "sans",  "fontWeight": 400, "fontSize": "18px",  "lineHeight": "1.3em",  "letterSpacing": "-0.02em", "textAlign": "left",   "paragraphSpacing": 20 },
+    "bodySmall":   { "framerPath": "/Body Small",       "tag": "p",  "fontFamily": "sans",  "fontWeight": 400, "fontSize": "15px",  "lineHeight": "1.3em",  "letterSpacing": "-0.01em", "textAlign": "left",   "paragraphSpacing": 20 },
+    "footerMenu":  { "framerPath": "/Footer Menu",      "tag": "p",  "fontFamily": "sans",  "fontWeight": 400, "fontSize": "16px",  "lineHeight": "1.2em",  "letterSpacing": "-0.01em", "textAlign": "left",   "paragraphSpacing": 20 },
+    "menuLink":    { "framerPath": "/Menu Link",        "tag": "p",  "fontFamily": "sans",  "fontWeight": 500, "fontSize": "15px",  "lineHeight": "1.1em",  "letterSpacing": "0",       "textAlign": "left",   "paragraphSpacing": 20 },
+    "menuLinkMobile": { "framerPath": "/Menu Link Mobile", "tag": "p", "fontFamily": "serif", "fontWeight": 300, "fontSize": "36px", "lineHeight": "1.2em", "letterSpacing": "-0.05em", "textAlign": "left", "paragraphSpacing": 20 },
+    "label":       { "framerPath": "/Label",            "tag": "p",  "fontFamily": "sans",  "fontWeight": 500, "fontSize": "15px",  "lineHeight": "1.2em",  "letterSpacing": "0.02em",  "textAlign": "left",   "paragraphSpacing": 20, "textTransform": "uppercase" },
+    "labelSmall":  { "framerPath": "/Label Small",      "tag": "p",  "fontFamily": "sans",  "fontWeight": 500, "fontSize": "14px",  "lineHeight": "15px",   "letterSpacing": "0.02em",  "textAlign": "left",   "paragraphSpacing": 20, "textTransform": "uppercase" }
+  },
+  "typographyRules": {
+    "headingsNeverColored": true,
+    "headingsNeverUppercase": true,
+    "labelsAlwaysUppercase": true,
+    "letterSpacingNegativeThreshold": "Letter-spacing negativo em todo heading ≥ 20px"
+  },
+  "spacing": {
+    "0":   { "value": "0" },
+    "0-5": { "value": "2px",   "usage": "Gap grid do método (blocos justapostos) / altura do divisor accent" },
+    "1":   { "value": "4px" },
+    "2":   { "value": "8px" },
+    "2-5": { "value": "10px",  "usage": "Gap default de frames" },
+    "3":   { "value": "12px",  "usage": "Padding vertical de botão primário" },
+    "3-5": { "value": "14px",  "usage": "Gap entre botões em navbar" },
+    "4":   { "value": "16px",  "usage": "Padding navbar, gap social icons" },
+    "5":   { "value": "20px",  "usage": "Padding lateral mobile / ServiceTab gap intra-grupo" },
+    "6":   { "value": "24px",  "usage": "Padding lateral secundário / gap headline" },
+    "7":   { "value": "28px",  "usage": "Gap footer column" },
+    "8":   { "value": "32px",  "usage": "Padding lateral principal (desktop)" },
+    "9":   { "value": "34px",  "usage": "Gap navbar menu links" },
+    "10":  { "value": "40px",  "usage": "Gap content vertical / largura do divisor editorial accent" },
+    "12":  { "value": "48px",  "usage": "Gap service tab content" },
+    "13":  { "value": "50px",  "usage": "Gap serviços" },
+    "15":  { "value": "60px",  "usage": "Gap service content / padding vertical método" },
+    "16":  { "value": "64px",  "usage": "Padding lateral ServiceTab" },
+    "20":  { "value": "80px",  "usage": "Gap grid footer / gap Amount-Title em MetricsCard" },
+    "25":  { "value": "100px", "usage": "Padding top serviços" },
+    "35":  { "value": "140px", "usage": "Padding top hero text container" },
+    "40":  { "value": "160px", "usage": "Padding top logo footer" },
+    "45":  { "value": "180px", "usage": "Padding bottom serviços" }
+  },
+  "radius": {
+    "none":   { "value": "0" },
+    "button": { "value": "6px", "usage": "Único radius usado; exclusivo de botões primários" }
+  },
+  "border": {
+    "width":  { "value": "1px" },
+    "style":  { "value": "solid" }
+  },
+  "shadow": {
+    "_comment": "Zero shadows no projeto. Não adicionar."
+  },
+  "breakpoint": {
+    "desktop": { "value": "1200px", "primary": true },
+    "tablet":  { "value": "810px" },
+    "phone":   { "value": "390px" }
+  },
+  "layout": {
+    "containerMaxWidth":   { "value": "1920px" },
+    "containerPaddingDesktop": { "value": "32px" },
+    "containerPaddingSecondary": { "value": "24px" },
+    "containerPaddingMobile":  { "value": "20px" }
+  },
+  "component": {
+    "button": {
+      "padding":      { "value": "12px 20px" },
+      "borderRadius": { "ref": "radius.button" },
+      "gap":          { "value": "10px" },
+      "typography":   { "ref": "typography.menuLink" },
+      "variants": {
+        "light":       { "background": "#FFFFFF", "text": "#1C1917" },
+        "dark":        { "background": "#1C1917", "text": "#F5F0EA", "notes": "v1.1 warm black + cream" },
+        "transparent": { "background": "rgba(245,240,234,0.16)", "text": "#F5F0EA", "notes": "v1.1 cream alpha" }
+      },
+      "forbidden": {
+        "noAccentBackground": "Botão primário NUNCA usa /Accent como background; contradiz autoridade calma"
+      },
+      "hoverPattern": "Text slides up 24px, mirrored text enters from bottom. transform translateY + opacity, ~300ms ease"
+    },
+    "underlineButton": {
+      "width":        { "value": "280px" },
+      "textPadding":  { "value": "12px 0" },
+      "gap":          { "value": "10px" },
+      "typography":   { "ref": "typography.body" },
+      "arrowSize":    { "value": "20px × 23px" },
+      "lineHeight":   { "value": "1px" },
+      "hoverLineColor": { "value": "/Accent", "notes": "v1.1 — linha de hover agora em accent" },
+      "hoverPattern": "Line animates width 1% → 100%, opacity 0 → 1, color /Accent, ~400ms ease-out"
+    },
+    "navigationBar": {
+      "padding":        { "value": "16px 0" },
+      "borderBottom":   { "value": "1px solid" },
+      "menuGap":        { "value": "34px" },
+      "ctaGap":         { "value": "14px" },
+      "containerPadding": { "value": "0 32px" },
+      "variants":       ["DesktopTransparent", "DesktopLight", "DesktopDark", "MobileOpen×3", "MobileClosed×3"],
+      "languageSelector": {
+        "approach": "Texto 'EN · PT · ES' em TASA Orbiter caps (/Label Small) separados por interpunct",
+        "forbidden": "Emojis de bandeira 🇺🇸🇧🇷🇪🇸 — informais demais para executive advisory"
+      },
+      "optionalAccent": {
+        "spot": "Label caps pequeno sob logotipo 'The Growth Method' em /Label Small cor /Accent",
+        "rationale": "Uso canônico do accent como assinatura editorial"
+      }
+    },
+    "serviceTab": {
+      "desktopWidth":  { "value": "900px" },
+      "gap":           { "value": "60px" },
+      "mediaSize":     { "value": "180px × fit-image, max-height 420px" },
+      "iconSize":      { "value": "32px × 32px" },
+      "headingStyle":  { "ref": "typography.heading3" },
+      "captionStyle":  { "ref": "typography.body", "opacity": 0.6 },
+      "paddingInstance": { "value": "64px 48px 64px 0" },
+      "hoverLineColor": { "value": "/Accent", "notes": "v1.1 — linha de hover na base em accent" }
+    },
+    "metricsCard": {
+      "desktop": {
+        "width":   { "value": "280px" },
+        "padding": { "value": "20px" },
+        "gap":     { "value": "80px" },
+        "borderLeft": { "value": "1px solid", "color": "rgba(22,35,27,0.16)" },
+        "amountStyle": { "ref": "typography.display" },
+        "titleStyle":  { "ref": "typography.label" },
+        "accentUsageRule": "Em grid de 3 metrics cards, aplicar /Accent apenas em 1 dos 3 numerais (o primeiro ou mais importante). Nunca nos 3 simultaneamente."
+      },
+      "mobile": {
+        "width":   { "value": "390px" },
+        "padding": { "value": "20px 10px" },
+        "gap":     { "value": "20px" },
+        "borderTop": { "value": "1px solid", "color": "rgba(22,35,27,0.16)" }
+      }
+    },
+    "footer": {
+      "background":     { "value": "#1C1917", "notes": "v1.1 warm black" },
+      "textColor":      { "value": "#F5F0EA", "notes": "v1.1 cream, não white puro" },
+      "borderTop":      { "value": "1px solid rgba(245,240,234,0.1)" },
+      "padding":        { "value": "64px 32px 0" },
+      "logoWrapperPadding": { "value": "160px 0 0" },
+      "bottomPadding":  { "value": "30px 0" },
+      "gridColumnsGap": { "value": "80px 0" },
+      "columnGap":      { "value": "28px" },
+      "socialGap":      { "value": "16px" },
+      "socialIconSize": { "value": "24px × 24px" },
+      "accentUsage": {
+        "emailLink": "Email de contato (hello@ / betina@) em cor /Accent — único link colorido entre links neutros",
+        "socialHover": "Hover state de social icons transita para /Accent",
+        "noElsewhere": "Nenhum outro elemento do footer usa accent"
+      }
+    },
+    "ctaSection": {
+      "background":  { "value": "#FFFFFF" },
+      "padding":     { "value": "40px 32px" },
+      "maxWidth":    { "value": "1920px" },
+      "gap":         { "value": "24px" },
+      "headingStyle": { "ref": "typography.heading4" },
+      "headingMaxWidth": { "value": "75%" },
+      "buttonVariant": "dark",
+      "notes": "CTA primário permanece preto sólido — nunca /Accent"
+    },
+    "editorialDivider": {
+      "description": "v1.1 NOVO — linha de 2px × 40px em /Accent, centralizada acima de heading de seção importante",
+      "size": { "width": "40px", "height": "2px" },
+      "color": "/Accent",
+      "margin": "0 auto 40px auto",
+      "usage": {
+        "applyBefore": ["H2 de seção editorial importante (ex: 'What they say', 'Designed For')"],
+        "maxPerSection": 1,
+        "maxPerPage": 2
+      }
+    },
+    "accent": {
+      "color": "#A6783E",
+      "rules": {
+        "allowedUses": [
+          "Divisor editorial 2px × 40px antes de heading de seção importante (máx 1/seção, 2/página)",
+          "Numeral de destaque em metrics cards (1 dos 3, não todos)",
+          "Label caps pequeno sob logotipo (ex: 'The Growth Method')",
+          "Underline de hover em links textuais",
+          "Icon discreto até 20px sempre acompanhando texto",
+          "Email/link de contato textual no footer (único link destacado)",
+          "Hover state de social icons",
+          "Aspas de abertura em testimonials (detalhe editorial)"
+        ],
+        "forbiddenUses": [
+          "Background de botão primário (contradiz autoridade calma)",
+          "Headings de qualquer tamanho (preservam monocromático)",
+          "Body de texto (prejudica legibilidade)",
+          "Background de card grande (quebra ritmo cromático)",
+          "Gradientes de qualquer tipo (zero gradientes no sistema)",
+          "Elementos decorativos sem função informacional",
+          "Qualquer coisa que compita com hierarquia tipográfica como atenção"
+        ],
+        "structural": {
+          "maxUsesPerViewport": 2,
+          "removalTest": "Se remover todo /Accent, peça ainda precisa funcionar perfeitamente. Se precisa do accent pra comunicar, design falhou antes.",
+          "noAccentOnAccent": "Nunca accent sobre accent; sempre separado por superfície monocromática",
+          "fallbackInDoubt": "Em contexto ambíguo, não usar. Accent ausente é melhor que accent mal aplicado."
+        }
+      }
+    }
+  },
+  "section": {
+    "hero": {
+      "height":     "100vh",
+      "background": "#1C1917",
+      "textColor":  "#F5F0EA",
+      "overlayOpacity": 0.4,
+      "padding":    "140px 32px 20px",
+      "textAlign":  "center",
+      "headlineStyle": "heading1",
+      "forbidden": ["gradient no H1 (fura léxico visual proibido)", "headline em /Accent"]
+    },
+    "welcome": {
+      "background": "#FFFFFF",
+      "padding":    "40px 0 0 (container) / 0 24px 60px (content)",
+      "contentVerticalGap": "40px",
+      "optionalAccent": "Divisor editorial 2px × 40px antes do Section Title se merecer destaque"
+    },
+    "method": {
+      "background": "#E5E4DE",
+      "padding":    "60px 20px",
+      "gridColumns": 3,
+      "gridRows":    2,
+      "gridGap":     "2px",
+      "gridMinWidth": "280px",
+      "cardPadding": "40px 32px",
+      "cardHeight":  "350px",
+      "cardGap":     "24px",
+      "cardBackgroundByIndex": ["#1C1917", "#FFFFFF", "#FFFFFF (with border)"],
+      "hasAnimatedOverlay": true
+    },
+    "services": {
+      "background": "#1C1917",
+      "textColor":  "#F5F0EA",
+      "padding":    "100px 0 180px",
+      "containerPadding": "0 32px",
+      "gap":        "50px",
+      "tabsGap":    "20px",
+      "tabsCount":  4,
+      "accentUsage": "Linha animada de hover em /Accent"
+    },
+    "ctaFinal": {
+      "background": "#FFFFFF",
+      "padding":    "40px 32px"
+    },
+    "footer": {
+      "background": "#1C1917",
+      "textColor":  "#F5F0EA"
+    },
+    "rhythm": ["dark-warm", "light", "canvas", "dark-warm", "light", "dark-warm"],
+    "_rule": "Inverter paleta entre seções consecutivas. Nunca duas seções iguais seguidas. Accent pontua 3-5 momentos no scroll total."
+  },
+  "animation": {
+    "smoothScroll": {
+      "enabled":   true,
+      "intensity": 10,
+      "recommended": "Lenis (lenis.darkroom.engineering) ou equivalente"
+    },
+    "parallax": {
+      "usage": "Em media de ServiceTab e possivelmente hero images",
+      "intensity": 10
+    },
+    "buttonHover":    "~300ms ease",
+    "underlineHover": "~400ms ease-out, cor /Accent",
+    "socialHover":    "~200ms ease, cream → accent"
+  },
+  "routes": {
+    "current": {
+      "home":          { "path": "/",                  "nodeId": "augiA20Il" },
+      "about":         { "path": "/about",             "nodeId": "Xb_XjemCB" },
+      "services":      { "path": "/services",          "nodeId": "pHehKh9Ro" },
+      "serviceDetail": { "path": "/services/:slug",    "nodeId": "QmSrmoXbH", "cmsBound": true },
+      "blog":          { "path": "/blog",              "nodeId": "O68vUlP4F" },
+      "blogPost":      { "path": "/blog/:slug",        "nodeId": "y7tnhkcWU", "cmsBound": true },
+      "contact":       { "path": "/contact",           "nodeId": "W8ACkDub3" },
+      "legal":         { "path": "/legal/:slug",       "nodeId": "gbmsatUmH", "cmsBound": true },
+      "notFound":      { "path": "/404",               "nodeId": "bYCgH2fmy" }
+    },
+    "recommendedV11": {
+      "home":            "/",
+      "about":           "/about",
+      "method":          "/the-growth-method",
+      "workWithMe":      "/work-with-me",
+      "speakingMedia":   "/speaking-media",
+      "talkToMe":        "/talk-to-me",
+      "legal":           "/legal/:slug",
+      "notFound":        "/404",
+      "_notes": "Migração v1.1: substituir /blog + /services + /contact por /the-growth-method + /work-with-me + /speaking-media + /talk-to-me. Arquitetura mais apropriada para marca pessoal advisory internacional."
+    }
+  },
+  "contact": {
+    "email":     "betina@betinaweber.com",
+    "emailAlt":  "hello@betinaweber.com",
+    "whatsapp":  "https://wa.me/5511970882833",
+    "instagram": "https://www.instagram.com/betinaweber/",
+    "linkedin":  "https://linkedin.com/in/betina-weber-12127b6b"
+  },
+  "componentRegistry": {
+    "Button":                { "nodeId": "ftzjUU3Wz" },
+    "FormButton":            { "nodeId": "qqIx5av8j" },
+    "BlogCard":              { "nodeId": "hZj581Wuv" },
+    "TestimonialCard":       { "nodeId": "uLft5hzrz" },
+    "Footer":                { "nodeId": "oNwSgscTG" },
+    "CTASection":            { "nodeId": "EJoyM9IYY" },
+    "ContactCard":           { "nodeId": "w6_yAk_XL" },
+    "MenuLink":              { "nodeId": "wvbBovyZA" },
+    "NavigationBar":         { "nodeId": "VtDH9XxBD" },
+    "MetricsCard":           { "nodeId": "j_ACbEYm3" },
+    "SocialButton":          { "nodeId": "h7BPsQAjF" },
+    "WelcomeNote":           { "nodeId": "GFNL0Y7aq" },
+    "UnderlineButton":       { "nodeId": "ovwzDdFNi" },
+    "ServiceTab":            { "nodeId": "sLShUdAQw" },
+    "SectionTitle":          { "nodeId": "eLAL_gf8T" },
+    "TeamCard":              { "nodeId": "frpgcAwxp" },
+    "Logo":                  { "nodeId": "in_YmjEc4" },
+    "Spinner":               { "nodeId": "rXvw1hgXM" },
+    "JobListing":            { "nodeId": "HzngcVsdi" },
+    "InteractiveTickerLink": { "nodeId": "Kvko4mfuB" },
+    "TickerContent":         { "nodeId": "kf6CG0aBn" }
+  }
+}

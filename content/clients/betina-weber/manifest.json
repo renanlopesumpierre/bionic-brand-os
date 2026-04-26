@@ -1,0 +1,21 @@
+{
+  "slug": "betina-weber",
+  "name": "Betina Weber",
+  "category": "Strategic Growth Advisory",
+  "essence": {
+    "pt": "Clareza estratégica para crescimento sustentável.",
+    "en": "Strategic clarity for sustainable growth."
+  },
+  "positioning": {
+    "pt": "Não é consultora. Não é coach. É parceira estratégica de crescimento.",
+    "en": "Not a consultant. Not a coach. A strategic growth partner."
+  },
+  "thematicClass": "theme-betina",
+  "versions": {
+    "brandSystem": "1.2.0",
+    "designSystem": "1.1.0",
+    "designTokens": "1.1.0"
+  },
+  "owner": "TAG*",
+  "public": true
+}

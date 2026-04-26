@@ -1,0 +1,34 @@
+{
+  "client": "Betina Weber",
+  "version": "1.2.0",
+  "fonts": [
+    {
+      "role": "Display · serif",
+      "family": "Spectral",
+      "brandWeights": [200, 300],
+      "availableWeights": [200, 300, 400, 500, 600, 700, 800],
+      "usage": "Toda hierarquia de heading. Letter-spacing negativo agressivo em tamanhos ≥ 36px. Brand usa 200 e 300; demais pesos disponíveis para cenários auxiliares.",
+      "source": "Google Fonts",
+      "url": "https://fonts.google.com/specimen/Spectral",
+      "cssImport": "@import url('https://fonts.googleapis.com/css2?family=Spectral:wght@200;300;400;500;600;700;800&display=swap');",
+      "fontFamily": "Spectral, 'Times New Roman', Georgia, serif"
+    },
+    {
+      "role": "Body · sans",
+      "family": "TASA Orbiter",
+      "brandWeights": [400, 500],
+      "availableWeights": [400, 500, 600, 700, 800],
+      "usage": "Body, UI, navegação, labels. Humanismo executivo sem competir com a serif. Brand usa 400 e 500; demais pesos disponíveis para cenários auxiliares.",
+      "source": "Google Fonts",
+      "url": "https://fonts.google.com/specimen/TASA+Orbiter",
+      "cssImport": "@import url('https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400;500;600;700;800&display=swap');",
+      "fontFamily": "'TASA Orbiter', Inter, ui-sans-serif, system-ui, sans-serif"
+    }
+  ],
+  "rules": {
+    "headingsNeverColored": true,
+    "headingsNeverUppercase": true,
+    "labelsAlwaysUppercase": true,
+    "letterSpacingNegativeThreshold": "Letter-spacing negativo em todo heading ≥ 20px"
+  }
+}

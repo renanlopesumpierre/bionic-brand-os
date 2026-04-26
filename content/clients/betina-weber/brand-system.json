@@ -1,0 +1,785 @@
+{
+  "$schema": "https://tag-brand.io/schemas/brand-system-v1.json",
+  "meta": {
+    "brand": "Betina Weber",
+    "version": "1.2.0",
+    "generatedAt": "2026-04-24",
+    "owner": "TAG*",
+    "changelog": {
+      "v1.2": [
+        "Pragmatismo Premium adicionado como sexto vetor de tom (verbal.toneVectors)",
+        "Manifesto canônico completo documentado (verbal.manifesto)",
+        "Pool expandido de frases de impacto: primárias bilíngues, secundárias, por pilar (verbal.impactPhrases)",
+        "Mensagens canônicas por oferta (offerings[].canonicalMessaging)",
+        "Mensagens canônicas por público (audience.canonicalMessaging)",
+        "Arquitetura do Brandbook Digital (19 páginas) com mapeamento a 6 camadas (architecture.digitalBrandbook)",
+        "Vocabulário visual proibido expandido: excesso de dourado, estética motivacional, elementos infantilizados, curvas decorativas"
+      ],
+      "v1.1": [
+        "8ª frase sagrada adicionada: 'Not a consultant. Not a coach. A strategic growth partner.'",
+        "Intelligence Triangle adicionado como camada conceitual secundária (core.intelligenceTriangle)",
+        "Padrão verbal 'definição por contraste' adicionado (verbal.definitionByContrast)",
+        "CTAs canônicos expandidos para inglês (verbal.canonicalCTAs.en)",
+        "Arquitetura de site simplificada recomendada (architecture.recommendedSitemap)",
+        "Léxico proibido estendido com 'sabedoria ancestral', 'rarest edge', 'ancestry cannot be taught'",
+        "Registro editorial denso documentado (verbal.editorialDenseRegister)",
+        "Alertas de erosão v1.1 (accent fora de regra, intelligence triangle com tradução literal em BR)",
+        "Gabarito D (posicionamento por contraste) adicionado aos gabaritos de aplicação",
+        "Matriz de aplicação expandida com 'The Growth Method' e 'Speaking & Media'"
+      ]
+    },
+    "companionDocs": {
+      "designSystem": "betina-weber-design-system.md v1.1",
+      "designTokens": "betina-weber-tokens.json v1.1",
+      "brandSystemFull": "brand-system.md v1.2",
+      "brandPrompt": "brand-prompt.md v1.2",
+      "brandAgentMaster": "betina-brand-prompt-master.md v1.2"
+    }
+  },
+
+  "core": {
+    "essence": {
+      "pt": "Clareza estratégica para crescimento sustentável.",
+      "en": "Strategic clarity for sustainable growth."
+    },
+    "thesis": "Crescimento não falha por falta de estratégia. Falha por desalinhamento entre direção, liderança, operação, posicionamento e sustentação. O crescimento que permanece nasce quando negócio, consciência decisória e longevidade operam como sistema único.",
+    "purpose": {
+      "operational": "Estruturar crescimento real a partir de clareza estratégica, alinhamento de liderança e consistência operacional.",
+      "timeless": "Transformar complexidade humana e organizacional em direção clara, decisões melhores e crescimento sustentável."
+    },
+    "mission": "Ajudar empresas e líderes a crescer com consistência, integrando direção estratégica, clareza de liderança e capacidade de sustentação.",
+    "vision": "Ser reconhecida globalmente como referência em crescimento estratégico para negócios premium, integrando performance, clareza e longevidade.",
+    "promise": "Transformar complexidade em clareza, clareza em direção e direção em crescimento sustentável.",
+    "signature": {
+      "pt": "Crescimento exige clareza. Crescimento exige estratégia. Crescimento exige longevidade.",
+      "en": "Growth demands clarity. Growth demands strategy. Growth demands longevity."
+    },
+    "intelligenceTriangle": {
+      "_note": "v1.1 NOVO — camada conceitual secundária, opcional e contextual",
+      "description": "Tríade que resolve a tensão 'consultor humano vs IA vs tradição'. A marca se posiciona como integradora dos três, em vez de competir com nenhum.",
+      "thesis": "O diferencial é a combinação dos três. Nenhum é suficiente isoladamente. Juntos formam um edge competitivo que não pode ser copiado.",
+      "mapping": {
+        "wellness": {
+          "nature": "Temporal",
+          "intelligenceEN": "Ancestral Intelligence",
+          "intelligencePT": "Inteligência de experiência / Inteligência vivencial",
+          "role": "Sabedoria da experiência vivida, padrões humanos, ciclos — não replicável por algoritmo",
+          "forbiddenPTTranslations": [
+            "Sabedoria ancestral",
+            "Sabedoria dos ciclos",
+            "Inteligência ancestral",
+            "Linhagem espiritual"
+          ]
+        },
+        "business": {
+          "nature": "Estrutural",
+          "intelligenceEN": "Acquired Intelligence",
+          "intelligencePT": "Inteligência adquirida",
+          "role": "15+ anos de imersão em mercados, culturas e estágios de crescimento — ganha, não aprendida"
+        },
+        "technology": {
+          "nature": "Instrumental",
+          "intelligenceEN": "Artificial Intelligence",
+          "intelligencePT": "Inteligência artificial",
+          "role": "Uso estratégico de IA como alavanca de precisão, escala e edge competitivo"
+        }
+      },
+      "activationRules": {
+        "allowedContexts": [
+          "Comunicação internacional (EN)",
+          "Conteúdo de autoridade sobre AI e liderança",
+          "Páginas About e The Growth Method",
+          "Palestras executivas premium",
+          "Contextos onde a ansiedade 'IA vs consultor' é relevante"
+        ],
+        "forbiddenContexts": [
+          "Instagram casual",
+          "Audiência BR popular",
+          "Contexto wellness",
+          "Comunicação introdutória da marca (exige que o leitor já entenda o Growth Method primeiro)"
+        ]
+      }
+    }
+  },
+
+  "method": {
+    "name": "The Growth Method",
+    "pillars": {
+      "business": {
+        "label": "Business",
+        "nature": "Estrutural",
+        "frase": "Business dá direção.",
+        "question": "Para onde o negócio vai?",
+        "scope": "direção, posicionamento, oferta, expansão, modelo comercial, presença digital, diferenciação, experiência do cliente, performance de negócio",
+        "role": "Dar clareza sobre onde o negócio está, para onde deve ir e quais estruturas precisam ser organizadas para crescer."
+      },
+      "consciousness": {
+        "label": "Consciousness",
+        "nature": "Cognitiva",
+        "frase": "Consciousness dá clareza.",
+        "question": "Quem está decidindo e com que clareza?",
+        "scope": "clareza de liderança, leitura de contexto, reconhecimento de padrões, tomada de decisão, maturidade",
+        "role": "Elevar a qualidade das decisões humanas que definem a direção do negócio."
+      },
+      "wellness": {
+        "label": "Wellness",
+        "nature": "Temporal",
+        "frase": "Wellness dá sustentação.",
+        "question": "O que sustenta isso ao longo do tempo?",
+        "scope": "saúde da liderança, consistência operacional, energia organizacional, qualidade das relações, cultura, ritmo, longevidade",
+        "role": "Garantir que crescimento não seja apenas aceleração, mas construção sustentável."
+      }
+    },
+    "formula": "Business dá direção. Consciousness dá clareza. Wellness dá sustentação. Quando operam juntas, crescimento deixa de ser esforço fragmentado e passa a ser sistema."
+  },
+
+  "beliefs": [
+    "Crescimento real exige clareza.",
+    "Negócios sofisticados não são construídos no improviso.",
+    "Toda empresa cresce no limite da clareza de quem decide.",
+    "Estratégia sem alinhamento não se sustenta.",
+    "Performance sem estrutura cobra um preço alto.",
+    "A experiência do cliente revela a maturidade da operação.",
+    "Liderança é leitura, direção e responsabilidade — não comando.",
+    "Wellness não é estilo de vida; é capacidade de sustentação.",
+    "Consciência aplicada ao negócio melhora decisões, relações e resultados.",
+    "Crescimento sustentável precisa ser desenhado."
+  ],
+
+  "values": [
+    { "name": "Clareza",         "criterion": "Se não está claro pro cliente, não está pronto." },
+    { "name": "Estratégia",      "criterion": "Toda entrega precisa gerar direção, não só conteúdo." },
+    { "name": "Consistência",    "criterion": "Padrão importa mais que pico." },
+    { "name": "Sofisticação",    "criterion": "Simplificar o complexo sem perder profundidade." },
+    { "name": "Responsabilidade","criterion": "Não aceitar projeto cuja consequência a marca não sustenta." },
+    { "name": "Integração",      "criterion": "Nenhuma dimensão opera isolada." },
+    { "name": "Longevidade",     "criterion": "Decisão de curto prazo que fragiliza o longo é recusada." }
+  ],
+
+  "architecture": {
+    "category": "Consultoria estratégica para crescimento sustentável",
+    "categoryEN": "Strategic Growth Advisory",
+    "territory": "Interseção entre estratégia de negócio, leitura humana e longevidade organizacional, aplicada a contextos premium.",
+    "notCompeteWith": [
+      "Consultores puros de negócio (falta dimensão humana)",
+      "Coaches executivos (falta estratégia sistêmica)",
+      "Wellness corporativo (falta profundidade decisória)"
+    ],
+    "publicPositioningStatement": {
+      "_note": "v1.1 — declaração pública do território, virou 8ª frase sagrada",
+      "en": "Not a consultant. Not a coach. A strategic growth partner.",
+      "pt": "Não é consultora. Não é coach. É parceira estratégica de crescimento."
+    },
+    "archetypes": {
+      "primary": {
+        "name": "O Sábio Estratégico",
+        "expresses": "Leitura, padrões, clareza, tradução de complexidade",
+        "dominantIn": ["Diagnóstico", "Conteúdo de autoridade", "Imersão"]
+      },
+      "secondary": {
+        "name": "O Governante",
+        "expresses": "Estrutura, excelência, padrão, liderança",
+        "dominantIn": ["Proposta comercial", "Clientes premium", "Ambientes de decisão"]
+      },
+      "behavioralSignature": {
+        "name": "A Curadora de Crescimento",
+        "expresses": "Observa, interpreta, organiza, refina, orienta",
+        "dominantIn": ["Presença pessoal da Betina", "Conteúdo em primeira pessoa", "Consultoria 1:1"]
+      },
+      "mixRule": "Sábio + Governante = 70/30 em conteúdo institucional. Sábio puro em educação. Governante puro em propostas formais. Curadora emerge na presença humana."
+    },
+    "personality": [
+      "Estratégica", "Sofisticada", "Clara", "Humana",
+      "Premium", "Internacional", "Sustentável"
+    ],
+    "recommendedSitemap": {
+      "_note": "v1.1 — migração de 9 para 8 páginas, mais coerente com executive advisory internacional",
+      "pages": [
+        { "path": "/",                  "role": "Home — hero + método + serviços + social proof + CTA" },
+        { "path": "/about",             "role": "About — bio, manifesto, intelligence triangle opcional, positioning" },
+        { "path": "/the-growth-method", "role": "Página dedicada ao método como IP" },
+        { "path": "/work-with-me",      "role": "Consolida as 4 ofertas em seções explícitas — não colapsar em single" },
+        { "path": "/speaking-media",    "role": "Speaking, mídia, publicações (substitui /blog)" },
+        { "path": "/talk-to-me",        "role": "Contato (substitui /contact, tom mais calmo)" },
+        { "path": "/legal/:slug",       "role": "Termos legais" },
+        { "path": "/404",               "role": "Erro" }
+      ],
+      "migrationFromV10": {
+        "remove": ["/blog", "/blog/:slug", "/services", "/services/:slug", "/contact"],
+        "add": ["/the-growth-method", "/work-with-me", "/speaking-media", "/talk-to-me"],
+        "criticalRule": "Em /work-with-me, manter as 4 ofertas (Consultoria, Treinamentos, Imersões, The Code) como seções explícitas. Não colapsar em oferta única."
+      }
+    },
+    "digitalBrandbook": {
+      "_note": "v1.2 NOVO — arquitetura do portal Bionic Brand OS para o espaço Betina. 19 páginas do Briefing mapeadas às 6 camadas do brand system.",
+      "layerToPages": {
+        "overview": ["01. Overview"],
+        "camada1_nucleoEstrategico": ["02. Identidade Essencial", "03. The Growth Method", "04. Posicionamento Estratégico", "05. Valores"],
+        "camada2_arquiteturaMarca": ["06. Diferenciais Competitivos", "09. Arquétipos e Personalidade"],
+        "camada3_publico": ["07. Público e Personas", "08. Persona Principal", "10. Tribos da Marca"],
+        "camada4_sistemaVerbal": ["11. Identidade Verbal", "12. Tom de Voz", "13. Mensagens por Público", "14. Mensagens por Oferta", "15. Frases de Impacto", "16. Manifesto", "17. Vocabulário e CTAs"],
+        "camada5_sistemaVisual": ["18. Identidade Visual"],
+        "camada6_aplicacao": ["19. Aplicações"],
+        "transversal": ["Ativos", "IA e Prompts", "Atualizações (changelog)"]
+      },
+      "uxPrinciples": {
+        "navigation": ["Sidebar fixa no desktop", "Menu compacto no mobile", "Âncoras por seção", "Busca interna"],
+        "interactions": ["Blocos copiáveis (slogans, taglines, frases, CTAs, prompts)", "Botões de copiar", "Área de downloads", "Filtros por tipo de ativo"],
+        "content": ["Hero editorial", "Cards estratégicos", "Cards de valores/método/diferenciais/persona", "Galeria de aplicações", "Timeline de atualizações"],
+        "responsive": ["Desktop", "Tablet", "Mobile"]
+      },
+      "experienceDirection": "Marca estratégica, madura, premium e internacional. Experiência calma, precisa e bem organizada. Central viva de identidade, não manual estático."
+    }
+  },
+
+  "offerings": [
+    {
+      "id": "consultoria",
+      "name": "Consultoria Estratégica",
+      "nameEN": "Strategic Advisory",
+      "moment": "Empresa ou líder precisa organizar crescimento",
+      "supportLine": "Clareza estratégica para negócios que precisam crescer com consistência.",
+      "supportLineEN": "Strategic clarity for businesses that need to grow with consistency.",
+      "dominantPillar": "Business",
+      "integratesPillars": ["Business", "Consciousness", "Wellness"],
+      "structure": {
+        "pillars": [
+          "Diagnóstico",
+          "People",
+          "Product",
+          "Marketing",
+          "Experience",
+          "Advisor"
+        ]
+      },
+      "canonicalMessaging": {
+        "_note": "v1.2 NOVO",
+        "headline": "Crescimento exige estrutura.",
+        "body": "A Consultoria Estratégica organiza diagnóstico, direção, posicionamento, operação, marketing, experiência e acompanhamento para empresas e líderes em expansão."
+      }
+    },
+    {
+      "id": "treinamentos",
+      "name": "Treinamentos e Palestras",
+      "nameEN": "Training & Speaking",
+      "moment": "Time precisa de alinhamento e direção coletiva",
+      "supportLine": "Treinamentos para transformar clareza em comportamento.",
+      "supportLineEN": "Training that turns clarity into behavior.",
+      "dominantPillar": "Consciousness",
+      "integratesPillars": ["Consciousness", "Wellness"],
+      "themes": [
+        "Crescimento Sustentável",
+        "Hospitalidade de Luxo como Padrão de Atendimento",
+        "Liderança Consciente e Times Exponenciais"
+      ],
+      "canonicalMessaging": {
+        "_note": "v1.2 NOVO",
+        "headline": "Times crescem quando entendem direção, padrão e responsabilidade.",
+        "body": "Os treinamentos e palestras da Betina Weber desenvolvem liderança, atendimento, cultura e consciência estratégica para organizações em expansão."
+      }
+    },
+    {
+      "id": "imersoes",
+      "name": "Imersões",
+      "nameEN": "Immersions",
+      "moment": "Líder precisa de decisão de inflexão em grupo seleto",
+      "supportLine": "Clareza concentrada para momentos decisivos.",
+      "supportLineEN": "Concentrated clarity for decisive moments.",
+      "dominantPillar": "Integração B+C+W",
+      "integratesPillars": ["Business", "Consciousness", "Wellness"],
+      "canonicalMessaging": {
+        "_note": "v1.2 NOVO",
+        "headline": "Ambientes intensivos para decisões estratégicas.",
+        "body": "As imersões criam espaço, método e profundidade para líderes que precisam reposicionar, organizar e destravar crescimento."
+      }
+    },
+    {
+      "id": "thecode",
+      "name": "The Code",
+      "nameEN": "The Code",
+      "moment": "Indivíduo precisa de leitura própria antes de decidir",
+      "supportLine": "Autoconhecimento aplicado à liderança, à carreira e aos negócios.",
+      "supportLineEN": "Self-knowledge applied to leadership, career and business.",
+      "dominantPillar": "Consciousness",
+      "integratesPillars": ["Consciousness"],
+      "canonicalMessaging": {
+        "_note": "v1.2 NOVO",
+        "headline": "Clareza humana para decisões mais precisas.",
+        "body": "The Code ajuda pessoas a compreenderem sua natureza, padrões, habilidades e caminhos possíveis de crescimento."
+      }
+    }
+  ],
+
+  "authorityAssets": [
+    "15+ anos em gestão, saúde e hospitalidade de luxo",
+    "Prêmio Melhor Spa das Américas (Rede Four Seasons)",
+    "Prêmio Melhor Spa de São Paulo (Revista Época)",
+    "Trajetória com Four Seasons, Rosewood, Six Senses, One&Only, Cheval Blanc, Hospital Albert Einstein, SXSW",
+    "Presença ativa em Brasil, EUA e América Latina",
+    "Criadora do The Growth Method"
+  ],
+  "authorityRules": {
+    "maxPerPiece": 3,
+    "selectBy": "proximidade contextual (ex: hotelaria → Four Seasons; saúde → Einstein; internacional → presença em 3 mercados)"
+  },
+
+  "audience": {
+    "primaryPersona": {
+      "name": "O Líder em Expansão",
+      "nameEN": "The Leader in Expansion",
+      "traits": [
+        "Já tem tração, busca estrutura",
+        "Rejeita motivação e urgência artificial",
+        "Valoriza leitura estratégica de quem fala com ele",
+        "Compra sofisticação, não entusiasmo",
+        "Decide por profundidade, não por prova social volumosa",
+        "Lê entre linhas — comunicação densa é respeitosa"
+      ]
+    },
+    "secondaryProfiles": [
+      {
+        "id": "empresarios",
+        "name": "Empresários e líderes em expansão",
+        "angle": "Controle sem perda de qualidade",
+        "keywords": ["estrutura", "direção", "expansão", "delegar", "padrão"],
+        "pillarBridge": "Business → Consciousness"
+      },
+      {
+        "id": "profissionais",
+        "name": "Profissionais liberais premium (médicos, especialistas)",
+        "angle": "Transformar reputação em negócio",
+        "keywords": ["autoridade", "valor percebido", "oferta premium", "diferenciação"],
+        "pillarBridge": "Business → Experience"
+      },
+      {
+        "id": "empresas_saude_luxo",
+        "name": "Empresas de saúde, hotelaria, luxo",
+        "angle": "Elevar padrão coletivo",
+        "keywords": ["excelência", "hospitalidade", "cultura", "retenção", "encantamento"],
+        "pillarBridge": "Wellness → Business"
+      },
+      {
+        "id": "clareza_individual",
+        "name": "Pessoas em busca de clareza individual",
+        "angle": "Leitura própria antes de decidir",
+        "keywords": ["padrões", "direção", "coerência", "próximo passo"],
+        "pillarBridge": "Consciousness (puro)"
+      }
+    ],
+    "tribes": [
+      "Líderes em Expansão",
+      "Negócios Premium",
+      "Saúde e Hospitalidade",
+      "Alta Performance Consciente"
+    ],
+    "canonicalMessaging": {
+      "_note": "v1.2 NOVO — microcopy pronto para uso literal em seções, landing pages e emails segmentados",
+      "empresariosFundadores": {
+        "audience": "Empresários e Fundadores",
+        "headline": "Crescimento real exige mais do que ambição.",
+        "body": "Exige clareza para decidir, estratégia para direcionar e estrutura para sustentar.\n\nA Betina Weber ajuda empresários a organizarem o próximo ciclo de expansão com mais precisão, sofisticação e consistência."
+      },
+      "profissionaisLiberaisEspecialistas": {
+        "audience": "Profissionais Liberais e Especialistas",
+        "headline": "Expertise não basta quando o mercado exige diferenciação, posicionamento e experiência.",
+        "body": "A Betina Weber ajuda profissionais de alto nível a transformarem reputação, conhecimento e entrega em crescimento estruturado e percepção de valor."
+      },
+      "medicosProfissionaisSaude": {
+        "audience": "Médicos e Profissionais da Saúde",
+        "headline": "Negócios de saúde exigem confiança, excelência, clareza e experiência.",
+        "body": "A Betina Weber ajuda profissionais e empresas da saúde a crescerem com posicionamento, sofisticação, padrão de atendimento e longevidade."
+      },
+      "empresasLuxoHospitalidade": {
+        "audience": "Empresas de Luxo e Hospitalidade",
+        "headline": "Mercados premium não toleram desalinhamento entre promessa, atendimento e experiência.",
+        "body": "A Betina Weber ajuda empresas de luxo e hospitalidade a estruturarem crescimento com padrão, refinamento e consistência."
+      },
+      "timesLideranca": {
+        "audience": "Times de Liderança",
+        "headline": "Times não escalam sem clareza.",
+        "body": "A Betina Weber desenvolve treinamentos e palestras para alinhar liderança, operação, atendimento e cultura de crescimento."
+      },
+      "clarezaIndividual": {
+        "audience": "Pessoas em Busca de Clareza Individual",
+        "headline": "Autoconhecimento, quando bem aplicado, melhora decisões.",
+        "body": "The Code ajuda pessoas a compreenderem seus padrões, forças e caminhos para crescer com mais direção e coerência."
+      }
+    }
+  },
+
+  "verbal": {
+    "toneVectors": [
+      { "name": "Clareza",               "test": "Alguém fora do setor entende em uma leitura?" },
+      { "name": "Precisão",              "test": "Cada frase orienta entendimento, decisão ou percepção?" },
+      { "name": "Autoridade calma",      "test": "Convence sem gritar, prometer ou urgir?" },
+      { "name": "Sofisticação",          "test": "Densidade alta, palavra supérflua ausente?" },
+      { "name": "Humanidade estratégica","test": "Menciona pessoa/comportamento com maturidade, sem sentimentalismo?" },
+      { "name": "Pragmatismo Premium",   "test": "A peça conecta reflexão a aplicação prática? Aponta para clareza, decisão, crescimento, experiência ou sustentação?", "_note": "v1.2 NOVO — toda peça deve conectar pensamento a consequência prática dentro de B/C/W" }
+    ],
+    "verbalMatrixV3": {
+      "visao": {
+        "function": "Leitura estratégica da realidade",
+        "language": ["clara", "analítica", "estratégica", "refinada", "orientada à realidade"],
+        "examples": [
+          "Toda expansão começa com uma leitura precisa da realidade.",
+          "Crescimento sustentável começa quando a complexidade se transforma em clareza.",
+          "Antes de escalar, é preciso enxergar."
+        ]
+      },
+      "valor": {
+        "function": "Impacto prático e concreto",
+        "language": ["objetiva", "aplicada", "concreta", "orientada à transformação"],
+        "examples": [
+          "Estrutura transforma potencial em crescimento consistente.",
+          "Performance sem estrutura colapsa.",
+          "Negócios sofisticados não são improvisados."
+        ]
+      },
+      "vinculo": {
+        "function": "Dimensão humana e de relação",
+        "language": ["humana", "elegante", "contida", "profunda sem emocional"],
+        "examples": [
+          "Líderes claros tomam decisões melhores.",
+          "Crescer importa. Sustentar o crescimento importa ainda mais.",
+          "O negócio cresce no limite da clareza de quem decide."
+        ]
+      }
+    },
+    "coreLexicon": {
+      "pt": ["Clareza", "Estratégia", "Crescimento", "Estrutura", "Direção", "Execução", "Consistência", "Sofisticação", "Alinhamento", "Performance", "Longevidade", "Precisão", "Experiência", "Liderança", "Sustentação"],
+      "en": ["Clarity", "Strategy", "Growth", "Structure", "Direction", "Execution", "Consistency", "Sophistication", "Alignment", "Performance", "Longevity", "Precision", "Experience", "Leadership", "Sustainability"]
+    },
+    "brandExpressions": [
+      "Clareza estratégica",
+      "Crescimento sustentável",
+      "Negócios premium",
+      "Liderança consciente",
+      "Estrutura de crescimento",
+      "Capacidade de sustentação",
+      "Direção estratégica",
+      "Experiência de alto padrão",
+      "Performance com longevidade",
+      "Business, Consciousness e Wellness"
+    ],
+    "forbiddenLexicon": {
+      "primary": [
+        "Espiritualidade", "Despertar", "Alma", "Sagrado", "Divino",
+        "Energia cósmica", "Cura interior", "Portal", "Manifestação espiritual",
+        "Jornada da alma", "Autoajuda genérica", "Equilíbrio superficial",
+        "Lifestyle wellness", "Coach motivacional", "Transformação mágica",
+        "Propósito divino",
+        "Sabedoria ancestral", "Inteligência ancestral", "Linhagem espiritual"
+      ],
+      "operational": [
+        "destravar potencial ilimitado", "você merece", "acredite no processo",
+        "universo conspira", "abundância", "melhor versão de si",
+        "romper limites", "sair da zona de conforto", "mindset vencedor",
+        "emojis em texto institucional", "rarest edge (superlativo auto-declarativo)",
+        "ancestry cannot be taught (elitista e ambíguo)"
+      ],
+      "visual": {
+        "_note": "v1.2 NOVO — espelho visual do léxico proibido",
+        "never": [
+          "Cores excessivamente vibrantes",
+          "Excesso de dourado (incluindo gradientes dourados e texturas metálicas)",
+          "Estética mística ou meditativa",
+          "Imagens genéricas de meditação ou espiritualidade",
+          "Elementos espirituais ou ornamentais",
+          "Wellness superficial",
+          "Estética motivacional ou de coach genérico",
+          "Banco de imagem corporativo artificial",
+          "Elementos infantilizados",
+          "Excesso de curvas decorativas",
+          "Efeitos visuais ruidosos",
+          "Gradientes de qualquer tipo",
+          "Shadows",
+          "Radius além de 6px (exclusivo de botões)",
+          "Playfair Display ou Inter (tipografia canônica é Spectral + TASA Orbiter)",
+          "Emojis de bandeira como seletor de idioma"
+        ]
+      }
+    },
+    "sacredPhrases": [
+      { "id": 1, "phrase": "Crescimento exige clareza.",                                     "role": "central",         "usage": "assinatura, abertura de manifesto, conteúdo institucional" },
+      { "id": 2, "phrase": "Clareza precede escala.",                                        "role": "autoridade",      "usage": "conteúdos sobre crescimento, liderança, diagnóstico, expansão" },
+      { "id": 3, "phrase": "Negócios sofisticados não são improvisados.",                    "role": "premium",         "usage": "públicos de alto padrão, luxo, saúde, hospitalidade" },
+      { "id": 4, "phrase": "Crescer importa. Sustentar o crescimento importa ainda mais.",   "role": "maturidade",      "usage": "Wellness sem superficialidade" },
+      { "id": 5, "phrase": "Toda expansão começa com uma leitura precisa da realidade.",     "role": "diagnóstico",     "usage": "consultoria, apresentações, chamadas comerciais" },
+      { "id": 6, "phrase": "Um negócio cresce no nível das suas decisões.",                  "role": "liderança",       "usage": "Consciousness, clareza decisória" },
+      { "id": 7, "phrase": "O crescimento que permanece é desenhado.",                       "role": "institucional",   "usage": "site, propostas, materiais premium" },
+      { "id": 8, "phrase": "Not a consultant. Not a coach. A strategic growth partner.",     "role": "positioning",     "usage": "páginas About, abertura de pitch, headline de posicionamento", "pt": "Não é consultora. Não é coach. É parceira estratégica de crescimento.", "_note": "v1.1 NOVO" }
+    ],
+    "impactPhrases": {
+      "_note": "v1.2 NOVO — pool expandido para uso em rotação além das 8 sagradas invariantes",
+      "primary": [
+        { "pt": "Crescimento é resultado de estrutura.", "en": "Growth is a structural outcome." },
+        { "pt": "Clareza precede escala.", "en": "Clarity precedes scale." },
+        { "pt": "Estratégia sem alinhamento não se sustenta.", "en": "Strategy without alignment does not sustain." },
+        { "pt": "Performance sem estrutura colapsa.", "en": "Performance without structure collapses." },
+        { "pt": "Crescimento sustentável é desenhado.", "en": "Sustainable growth is designed." },
+        { "pt": "Crescimento exige mais do que ambição.", "en": "Growth demands more than ambition." },
+        { "pt": "Direção transforma potencial em performance.", "en": "Direction turns potential into performance." },
+        { "pt": "Escala começa com precisão.", "en": "Scale begins with precision." }
+      ],
+      "secondary": [
+        { "pt": "O que você não enxerga é o que limita seu crescimento.", "en": "What you don't see is what limits your growth." },
+        { "pt": "A clareza da liderança define a direção do negócio.", "en": "Leadership clarity defines business direction." },
+        { "pt": "Crescimento não é aceleração. É alinhamento.", "en": "Growth is not acceleration. It is alignment." },
+        { "pt": "A execução revela a verdade da estratégia.", "en": "Execution reveals the truth of strategy." },
+        { "pt": "Estrutura define escala.", "en": "Structure defines scale." },
+        { "pt": "Um negócio cresce no nível das suas decisões.", "en": "A business grows at the level of its decisions." },
+        { "pt": "Crescimento sustentável exige clareza humana.", "en": "Sustainable growth requires human clarity." },
+        { "pt": "O futuro do crescimento é integrado.", "en": "The future of growth is integrated." },
+        { "pt": "Negócios sofisticados não são improvisados.", "en": "Sophisticated businesses are not improvised." },
+        { "pt": "Longevidade é a forma mais alta de performance.", "en": "Longevity is the highest form of performance." }
+      ],
+      "byPillar": {
+        "business": [
+          { "pt": "Business é direção, estrutura e crescimento estratégico.", "en": "Business is direction, structure and strategic growth." },
+          { "pt": "Negócios crescem quando direção, estrutura e execução operam juntas." }
+        ],
+        "consciousness": [
+          { "pt": "Consciousness é clareza aplicada à liderança e à tomada de decisão.", "en": "Consciousness is clarity applied to leadership and decision-making." },
+          { "pt": "Líderes claros tomam decisões melhores. Negócios melhores nascem dessas decisões." }
+        ],
+        "wellness": [
+          { "pt": "Wellness é a capacidade de sustentar crescimento sem perder coerência.", "en": "Wellness is the capacity to sustain growth without losing coherence." },
+          { "pt": "Crescer importa. Sustentar o crescimento importa ainda mais." }
+        ]
+      }
+    },
+    "manifesto": {
+      "_note": "v1.2 NOVO — texto institucional canônico, não reescrever nem parafrasear",
+      "title": "Crescimento exige clareza.",
+      "body": "Crescimento não é apenas movimento. Não é pressa. Não é excesso. Não é fazer mais, contratar mais, vender mais, comunicar mais, ocupar mais espaço.\n\nCrescimento real exige clareza.\n\nClareza para enxergar a realidade sem distorção. Clareza para reconhecer o que sustenta o negócio e o que limita sua expansão. Clareza para tomar decisões melhores, liderar com mais precisão e construir algo que não dependa apenas de esforço, urgência ou improviso.\n\nEmpresas não falham apenas por falta de oportunidade. Muitas falham por falta de direção. Crescem rápido demais sem estrutura. Comunicam antes de entender. Expandem antes de alinhar. Aceleram antes de sustentar. E, em algum ponto, a performance começa a cobrar o preço da desordem.\n\nO crescimento que permanece nasce de outra lógica. Nasce quando estratégia, liderança e operação deixam de funcionar como partes isoladas e passam a operar como um sistema. Nasce quando o negócio sabe para onde vai. Quando a liderança entende o que decide. Quando a equipe sabe o que sustenta. Quando a experiência entrega aquilo que a marca promete. Quando a ambição encontra estrutura.\n\nEsse é o ponto em que crescimento deixa de ser tentativa e passa a ser construção.\n\nA Betina Weber existe para organizar esse caminho. Para transformar complexidade em direção. Potencial em performance. Intuição em leitura estratégica. Experiência em método. Sofisticação em padrão. Clareza em crescimento.\n\nSua atuação nasce da interseção entre três dimensões essenciais. Business, porque crescimento precisa de estratégia, posicionamento, oferta, operação e resultado. Consciousness, porque toda empresa é limitada pela clareza de quem decide, lidera e sustenta a direção. Wellness, porque crescer sem capacidade de sustentação não é evolução. É desgaste com aparência de sucesso.\n\nNegócios premium não são construídos no improviso. Eles exigem refinamento. Exigem leitura de contexto. Exigem precisão nas decisões. Exigem consistência na entrega. Exigem uma liderança capaz de crescer sem perder coerência.\n\nPorque, no fim, a escala revela tudo. Revela a força da estratégia. Revela a maturidade da liderança. Revela a qualidade da operação. Revela se o crescimento estava estruturado ou apenas empurrado pela urgência.\n\nCrescimento sustentável não acontece por acidente. Ele é desenhado. Organizado. Decidido. Sustentado.\n\nA Betina Weber trabalha com empresas, líderes e organizações que não buscam apenas crescer mais. Buscam crescer melhor. Com clareza para decidir. Estratégia para direcionar. Estrutura para executar. Consciência para liderar. Longevidade para permanecer.\n\nPorque crescimento verdadeiro não é apenas chegar mais longe. É construir algo capaz de se sustentar quando chega lá.",
+      "closing": {
+        "en": "Growth demands clarity. Growth demands strategy. Growth demands longevity.",
+        "pt": "Crescimento exige clareza. Crescimento exige estratégia. Crescimento exige longevidade."
+      },
+      "usageRules": {
+        "fullTextIn": ["página About", "home editorial", "deck institucional", "abertura de imersão"],
+        "extractsIn": ["posts", "decks menores", "propostas"],
+        "forbidden": ["reescrever", "parafrasear", "traduzir EN completo sem aprovação"]
+      }
+    },
+    "signatures": {
+      "shortPT": "Crescimento exige clareza.",
+      "shortEN": "Growth demands clarity.",
+      "fullPT": "Crescimento exige clareza. Crescimento exige estratégia. Crescimento exige longevidade.",
+      "fullEN": "Growth demands clarity. Growth demands strategy. Growth demands longevity.",
+      "supportLineEN": "Strategic growth through clarity, alignment and execution.",
+      "supportLinePT": "Crescimento estratégico por meio de clareza, alinhamento e execução.",
+      "taglineInstitutional": "Clareza estratégica para crescimento sustentável.",
+      "taglinePremium": "Estratégia, consciência e longevidade para negócios em expansão.",
+      "taglineInternational": "Strategic clarity for sustainable growth."
+    },
+    "bios": {
+      "short": "Consultoria estratégica para crescimento sustentável. Business, Consciousness e Wellness aplicados a empresas, líderes e negócios premium.",
+      "shortEN": "Strategic advisory for sustainable growth. Business, Consciousness and Wellness applied to companies, leaders and premium organizations.",
+      "instagram": "Betina Weber\nStrategic Growth Consultant\nBusiness, Consciousness & Wellness\nClareza estratégica para crescimento sustentável\nBrasil, EUA e América Latina",
+      "linkedin": "Betina Weber é consultora estratégica especializada em crescimento sustentável para empresas, líderes e negócios premium.\n\nCom mais de 15 anos de experiência em gestão, saúde e hospitalidade de luxo, atua na interseção entre estratégia de negócio, clareza de liderança e longevidade organizacional.\n\nCriadora do The Growth Method, integra Business, Consciousness e Wellness para ajudar negócios a crescerem com direção, consistência e sofisticação.",
+      "institutional": "Betina Weber é consultora estratégica especializada em crescimento sustentável para empresas, líderes e negócios premium.\n\nSua trajetória combina mais de 15 anos de experiência em gestão de saúde, hospitalidade de luxo, liderança e desenvolvimento de negócios em contextos nacionais e internacionais.\n\nCriadora do The Growth Method, Betina integra três dimensões fundamentais para o crescimento: Business, Consciousness e Wellness.\n\nSua atuação ajuda empresas e líderes a transformarem complexidade em clareza, clareza em direção e direção em crescimento estruturado."
+    },
+    "canonicalCTAs": {
+      "pt": [
+        "Agendar uma conversa.",
+        "Falar com Betina.",
+        "Iniciar diagnóstico.",
+        "Conhecer o The Growth Method.",
+        "Solicitar consultoria.",
+        "Agendar uma imersão.",
+        "Entender meu momento.",
+        "Descobrir meu próximo ciclo de crescimento.",
+        "Desbloquear meu crescimento."
+      ],
+      "en": [
+        "Schedule a conversation.",
+        "Talk to Betina.",
+        "Begin a strategic assessment.",
+        "Explore The Growth Method.",
+        "Apply for advisory.",
+        "Apply for an immersion.",
+        "Understand my moment.",
+        "Map my next growth cycle.",
+        "Unlock my growth."
+      ]
+    },
+    "ctaRules": {
+      "placement": "em linha própria, sem caixa alta, sem exclamação, sem urgência artificial",
+      "doNotInvent": true,
+      "buttonStyle": "CTA nunca em /Accent — sempre preto sólido (/Dark) ou branco sólido (/Light)"
+    },
+
+    "pieceStructures": {
+      "postAutoridade": [
+        "Observação (Visão)",
+        "Consequência estratégica (Valor)",
+        "Reposicionamento (nova leitura)",
+        "Ponte para um dos pilares B/C/W",
+        "Fechamento com frase densa",
+        "CTA discreto"
+      ],
+      "carouselInstagram": [
+        "Slide 1: frase forte de abertura",
+        "Slide 2: problema central",
+        "Slide 3: consequência estratégica",
+        "Slide 4: nova leitura",
+        "Slide 5: aplicação prática",
+        "Slide 6: conexão com Business, Consciousness ou Wellness",
+        "Slide 7: fechamento com frase memorável",
+        "Slide 8: CTA"
+      ],
+      "propostaComercial": [
+        "Contexto",
+        "Diagnóstico do desafio",
+        "Objetivo da proposta",
+        "Método de trabalho",
+        "Escopo",
+        "Entregáveis",
+        "Cronograma",
+        "Investimento",
+        "Próximos passos"
+      ],
+      "emailInstitucional": [
+        "Linha 1: contexto ou observação",
+        "Linhas 2-4: proposição em densidade alta",
+        "Linha 5: pergunta ou próximo passo",
+        "Assinatura"
+      ]
+    },
+
+    "definitionByContrast": {
+      "_note": "v1.1 NOVO — padrão verbal absorvido do rascunho pessoal da Betina",
+      "description": "Afirma o que a marca é dizendo explicitamente o que ela não é. Gera alta densidade, força precisão e reforça léxico proibido por negação.",
+      "syntacticPatterns": [
+        "Not X. Not Y. It is Z.",
+        "Not A — it is B.",
+        "Não é A. Não é B. É C.",
+        "Isso não é A — é B."
+      ],
+      "canonicalExamples": [
+        "Not a consultant. Not a coach. A strategic growth partner.",
+        "This is not a psychological or spiritual dimension — it is a precision leadership capacity.",
+        "Wellness is not a lifestyle concept. It is a structural business requirement.",
+        "Crescimento não é aceleração. É alinhamento.",
+        "Wellness não é estilo de vida. É capacidade de sustentação."
+      ],
+      "whenToUse": [
+        "Aberturas de seção que redefinem conceito comum (wellness, coaching, liderança)",
+        "Headlines de posicionamento",
+        "Primeiro parágrafo de páginas About ou Method",
+        "Quando há risco real de confusão com categoria adjacente"
+      ],
+      "whenNotToUse": [
+        "Body de texto extenso (a técnica é de abertura, não de desenvolvimento)",
+        "Mais de 1 vez por peça (perde o efeito)",
+        "Em CTAs (CTAs são afirmativos, não comparativos)"
+      ]
+    },
+
+    "editorialDenseRegister": {
+      "_note": "v1.1 — registro para contextos internacionais premium e conteúdo de autoridade longo",
+      "characteristics": [
+        "Sentenças longas (20-35 palavras) combinadas com sentenças curtas (5-10) para ritmo",
+        "Vocabulário intelectual sem jargão (structural, architectural, calibrated, sustained)",
+        "Ausência completa de contrações em EN (cannot, não can't)",
+        "Parágrafos densos de 3-5 linhas alternados com frases-âncora isoladas",
+        "Zero emoji, zero exclamação, zero imperativo motivacional"
+      ],
+      "referenceExample": "Growth failures rarely stem from lack of strategy alone. They emerge from misalignment between the business direction, the leader executing it, and the organizational capacity required to sustain it.",
+      "referenceLabel": "Harvard Business Review / Monocle / Kinfolk — não LinkedIn coach / Medium thought-leader"
+    }
+  },
+
+  "applicationMatrix": [
+    { "piece": "Hero do site",             "verbal": "Visão",               "archetype": "Sábio",               "structure": "Frase sagrada + corpo denso + CTA (sem gradient)", "pillarBridge": "Integração B+C+W" },
+    { "piece": "Seção Método",             "verbal": "Valor",               "archetype": "Sábio + Governante",  "structure": "Introdução + 3 cards B/C/W + fórmula",             "pillarBridge": "Todos" },
+    { "piece": "Seção Serviços",           "verbal": "Valor",               "archetype": "Governante",          "structure": "4 tabs (ofertas) + frase de apoio",                "pillarBridge": "Por oferta" },
+    { "piece": "Página Sobre",             "verbal": "Vínculo",             "archetype": "Curadora",            "structure": "Bio institucional + ativos + intelligence triangle opcional", "pillarBridge": "C + W" },
+    { "piece": "Página The Growth Method", "verbal": "Visão + Valor",       "archetype": "Sábio puro",          "structure": "Definição + 3 pilares detalhados + case for integration", "pillarBridge": "Todos", "_note": "v1.1 NOVO" },
+    { "piece": "Proposta comercial",       "verbal": "Valor",               "archetype": "Governante",          "structure": "9 blocos fixos",                                   "pillarBridge": "Conforme oferta" },
+    { "piece": "Post IG autoridade",       "verbal": "Visão→Valor→Vínculo", "archetype": "Sábio",               "structure": "6 blocos",                                         "pillarBridge": "Um dos três" },
+    { "piece": "Carrossel IG",             "verbal": "Todos em sequência",  "archetype": "Sábio",               "structure": "8 slides",                                         "pillarBridge": "Explícito no slide 6" },
+    { "piece": "Post LinkedIn",            "verbal": "Visão + Valor",       "archetype": "Sábio",               "structure": "Artigo 3-5 parágrafos em registro editorial",      "pillarBridge": "Business dominante" },
+    { "piece": "Imersão (landing)",        "verbal": "Vínculo + Visão",     "archetype": "Curadora + Governante","structure": "Hero + contexto + agenda + CTA exclusivo",         "pillarBridge": "Integração" },
+    { "piece": "The Code (landing)",       "verbal": "Vínculo",             "archetype": "Curadora",            "structure": "Introdução contemplativa + método + CTA",          "pillarBridge": "Consciousness puro" },
+    { "piece": "Email institucional",      "verbal": "Valor",               "archetype": "Sábio",               "structure": "4-5 linhas",                                       "pillarBridge": "Contexto" },
+    { "piece": "Newsletter",               "verbal": "Visão",               "archetype": "Sábio",               "structure": "Observação + análise + link",                      "pillarBridge": "Um por edição" },
+    { "piece": "Speaking & Media",         "verbal": "Vínculo + Valor",     "archetype": "Governante + Curadora","structure": "Lista curada de talks/publicações + convite",     "pillarBridge": "C dominante", "_note": "v1.1 NOVO" }
+  ],
+
+  "templates": {
+    "_note": "v1.1 — Gabarito D adicionado",
+    "gabaritoA_postAutoridade": "[Observação, Visão] [Consequência, Valor] [Reposicionamento] [Ponte B/C/W] [Fechamento denso] [CTA]",
+    "gabaritoB_proposta": "[Nome] [Contexto do cliente, parágrafo denso] [Proposta organiza X a partir de Y do Growth Method, integrando B/C/W] [Estrutura] [Clareza estratégica para crescimento sustentável. — Betina Weber]",
+    "gabaritoC_secaoEditorial": "[Frase sagrada] [Expansão em 2-3 parágrafos, Visão → Valor] [Afirmação de preparação pra próxima seção]",
+    "gabaritoD_posicionamentoPorContraste": "[Not X.] [Not Y.] [It is Z.] [1 parágrafo expandindo com densidade] [Conexão com B/C/W]"
+  },
+
+  "pieceValidation": {
+    "checklist": [
+      "A frase irredutível está expressa, mesmo implicitamente?",
+      "Pelo menos um dos três pilares (B, C ou W) é identificável?",
+      "Nenhuma palavra da lista proibida aparece?",
+      "O tom passa nos 6 vetores (inclui Pragmatismo Premium v1.2)?",
+      "A estrutura segue um gabarito ou padrão?",
+      "Os tokens visuais respeitam o design system v1.1 (inclusive protocolo do Accent)?",
+      "Se há credenciais, estão entre as canônicas em no máximo 3?",
+      "Se usa Intelligence Triangle, respeitou regras de ativação e tradução PT?",
+      "A peça conecta reflexão a aplicação prática (Pragmatismo Premium v1.2)?"
+    ],
+    "requiredPassRate": "100% (9 de 9 para v1.2)"
+  },
+
+  "governance": {
+    "decisionHierarchy": [
+      "O que preserva a frase irredutível (essência)?",
+      "O que a Curadora de Crescimento faria?",
+      "O que o Líder em Expansão reconheceria como coerente?",
+      "Qual dos três pilares é mais afetado pela decisão?",
+      "Na dúvida remanescente: escolher a opção que gera mais longevidade, menos ruído."
+    ],
+    "requiresBetinaApproval": [
+      "Novas frases sagradas",
+      "Novos CTAs canônicos",
+      "Mudança em assinaturas oficiais",
+      "Novas ofertas ou alteração de nomes",
+      "Uso de credenciais não listadas",
+      "Qualquer comunicação em primeira pessoa",
+      "Posicionamento em mídia não pertencente à marca",
+      "Uso da camada Intelligence Triangle em contexto BR (exige validação de tradução caso a caso)"
+    ],
+    "autonomousByTeam": [
+      "Aplicação de gabaritos com conteúdo dentro do léxico nuclear",
+      "Produção de design seguindo design system v1.1 (incluindo protocolo estrito do Accent)",
+      "Tradução EN/PT de frases já canonizadas",
+      "Posts seguindo gabarito A com temas do vocabulário preferencial",
+      "Newsletter com estrutura conhecida",
+      "Migração do sitemap para arquitetura v1.1 (após aprovação da decisão macro pela Betina)"
+    ],
+    "newSacredPhraseCriteria": [
+      "Passa nos 5 vetores de tom",
+      "Funciona em PT e EN sem perda semântica",
+      "Densidade alta (máximo 10 palavras)",
+      "Conecta a pelo menos um pilar (B, C ou W)",
+      "Sobrevive ao teste do tempo (6 meses sem soar datada)"
+    ],
+    "erosionAlerts": [
+      "Mais de uma peça no mês usa palavra do léxico proibido",
+      "CTAs começam a variar livremente fora do repertório",
+      "Clientes confundem a marca com mentoria ou coaching",
+      "Comunicação adota emoji ou exclamação em material institucional",
+      "Surgem subpilares além de B/C/W sem ritual de aprovação",
+      "Visual começa a ganhar cor fora de /Accent ou gradientes",
+      "Accent aparece em elementos proibidos (CTA primário, heading, body, gradient)",
+      "Intelligence Triangle é ativado em contexto BR com tradução literal 'ancestral'",
+      "Tipografia migra para Playfair Display ou Inter (genéricas)"
+    ]
+  },
+
+  "contextualInputs": {
+    "aiAssistantInstructions": "brand-prompt.md v1.1",
+    "designSystemReference": "betina-weber-design-system.md v1.1",
+    "designTokensReference": "betina-weber-tokens.json v1.1"
+  }
+}
