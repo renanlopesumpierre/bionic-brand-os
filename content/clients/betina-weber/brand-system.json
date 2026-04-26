@@ -739,7 +739,7 @@
       "Qual dos três pilares é mais afetado pela decisão?",
       "Na dúvida remanescente: escolher a opção que gera mais longevidade, menos ruído."
     ],
-    "requiresBetinaApproval": [
+    "requiresOwnerApproval": [
       "Novas frases sagradas",
       "Novos CTAs canônicos",
       "Mudança em assinaturas oficiais",

@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props) {
 
 type GovernanceWithExtras = {
   decisionHierarchy: string[];
-  requiresBetinaApproval: string[];
+  requiresOwnerApproval: string[];
   autonomousByTeam: string[];
   newSacredPhraseCriteria?: string[];
   erosionAlerts: string[];
@@ -28,6 +28,18 @@ export default async function GovernancePage({ params }: Props) {
   const meta = client.brandSystem.meta as { changelog: Record<string, string[]> };
 
   const sacredCriteria = governance.newSacredPhraseCriteria ?? [];
+
+  // Cor accent vem dos tokens da marca (não hardcoded). Fallback pro accent
+  // do produto quando a marca-cliente não declarar accent próprio.
+  const accentTokens = (client.tokens as { color?: { accent?: { default?: { value?: string } } } }).color?.accent?.default;
+  const clientAccent = accentTokens?.value ?? "var(--color-accent)";
+
+  // RGBA do accent com alpha 0.12 pra fundo do badge — derivado do hex.
+  const accentSoft = clientAccent.startsWith("#")
+    ? `${clientAccent}1F` // 1F hex = ~12% alpha
+    : "var(--color-bg-alt)";
+
+  const ownerName = client.manifest.name;
 
   const changelog = Object.entries(meta.changelog).sort((a, b) =>
     b[0].localeCompare(a[0]),
@@ -86,7 +98,7 @@ export default async function GovernancePage({ params }: Props) {
       <Row label="Quem decide o quê">
         <p className="text-base text-[--color-fg-muted] max-w-3xl mb-10">
           Duas listas, lado a lado. À esquerda, o que o time executa sem
-          consulta. À direita, o que exige aprovação direta da Betina antes
+          consulta. À direita, o que exige aprovação direta de {ownerName} antes
           de virar pública.
         </p>
         <div className="grid md:grid-cols-2 gap-[1px] bg-[--color-border]">
@@ -121,26 +133,26 @@ export default async function GovernancePage({ params }: Props) {
             <div className="flex items-center gap-3 mb-2">
               <span
                 className="inline-flex items-center justify-center w-8 h-8"
-                style={{ background: "rgba(166,120,62,0.12)" }}
+                style={{ background: accentSoft }}
               >
-                <Lock className="w-4 h-4" style={{ color: "#A6783E" }} />
+                <Lock className="w-4 h-4" style={{ color: clientAccent }} />
               </span>
               <p className="type-mono text-[--color-fg-muted]">
-                Aprovação · Betina
+                Aprovação · {ownerName}
               </p>
             </div>
             <h3 className="text-2xl tracking-tight mb-6">
               Precisa de luz verde antes.
             </h3>
             <ul className="space-y-0">
-              {governance.requiresBetinaApproval.map((item) => (
+              {governance.requiresOwnerApproval.map((item) => (
                 <li
                   key={item}
                   className="grid grid-cols-[20px_1fr] items-baseline gap-3 py-3 border-t border-[--color-border]"
                 >
                   <Lock
                     className="w-3.5 h-3.5"
-                    style={{ color: "#A6783E" }}
+                    style={{ color: clientAccent }}
                   />
                   <span className="text-base leading-snug">{item}</span>
                 </li>
@@ -154,7 +166,7 @@ export default async function GovernancePage({ params }: Props) {
       {sacredCriteria.length > 0 && (
         <Row label="Nova frase sagrada">
           <p className="text-base text-[--color-fg-muted] max-w-3xl mb-8">
-            Quando a Betina considera adicionar uma nova frase sagrada ao
+            Quando {ownerName} considera adicionar uma nova frase sagrada ao
             repertório, a candidata precisa passar nos 5 critérios abaixo. Se
             falhar em qualquer um, não entra.
           </p>
@@ -189,7 +201,7 @@ export default async function GovernancePage({ params }: Props) {
             >
               <AlertTriangle
                 className="w-4 h-4 mt-0.5"
-                style={{ color: "#A6783E" }}
+                style={{ color: clientAccent }}
               />
               <p className="text-base leading-snug">{alert}</p>
             </li>

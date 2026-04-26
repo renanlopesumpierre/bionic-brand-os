@@ -20,6 +20,24 @@ const root = process.cwd();
 const clientsDir = join(root, "public", "clients");
 const contentClientsDir = join(root, "content", "clients");
 
+// Identidade visual do produto BBO (TAG) — usada nos elementos de "embalagem"
+// dos artefatos gerados (background, headers, linhas, texto auxiliar).
+// As cores DA MARCA-CLIENTE aparecem só dentro dos rectangles de amostra.
+// Tudo ao redor é TAG.
+//
+// Mantenha em sincronia com brand-interface/app/globals.css (paleta acromática
+// TAG + BDO Grotesk + IBM Plex Mono).
+const BBO_CHROME = {
+  bg: "#F2F2F2",        // tag-canvas (off-white dominante)
+  bgAlt: "#EDEDED",     // tag-card-grey
+  bgWhite: "#FFFFFF",   // bg-elevated
+  ink: "#111111",       // tag-black
+  inkSoft: "#828282",   // tag-mid-grey
+  line: "#D1D1D1",      // tag-line
+  fontDisplay: "BDO Grotesk, ui-sans-serif, system-ui, sans-serif",
+  fontMono: "ui-monospace, Menlo, monospace",
+};
+
 if (!existsSync(clientsDir)) {
   console.error("No public/clients directory.");
   process.exit(1);
@@ -57,7 +75,7 @@ async function buildColorsZipForClient(slug) {
   const stage = join(tmpdir(), `brand-colors-${slug}-${Date.now()}`);
   mkdirSync(stage, { recursive: true });
 
-  const brandFn = manifest.name; // "Betina Weber" — usado em nomes de arquivo
+  const brandFn = manifest.name; // ex: "Betina Weber" — usado em nomes de arquivo
   const nsKt = pascalCase(manifest.name) + "Colors"; // "BetinaWeberColors"
 
   // === Estrutura por audiência ===
@@ -97,7 +115,7 @@ async function buildColorsZipForClient(slug) {
     console.warn(`  ! PNG não gerado: ${err.message}`);
   }
   writeFileSync(join(F1, "Como aprovar uma peça.md"), buildBrandOwnerGuide(ctx));
-  writeFileSync(join(F1, "Regras do bronze (accent).md"), buildAccentRulesDoc(ctx));
+  writeFileSync(join(F1, "Regras do accent.md"), buildAccentRulesDoc(ctx));
   writeFileSync(join(F1, "Histórico das decisões cromáticas.md"), buildRationaleDoc(ctx));
 
   // === 02 — Para design ===
@@ -601,15 +619,17 @@ function buildSwatchSvg(ctx) {
       ? `<rect x="${x}" y="${y}" width="${cardW}" height="${swatchH}" fill="url(#checker)"/>
          <rect x="${x}" y="${y}" width="${cardW}" height="${swatchH}" fill="${c.rgb.cssAlpha}"/>`
       : `<rect x="${x}" y="${y}" width="${cardW}" height="${swatchH}" fill="${c.hex}"/>`;
-    const labelColor = c.hasAlpha || c.luminance > 0.4 ? "#1C1917" : "#F5F0EA";
+    // Texto sobre swatch: escolhe entre ink TAG ou cor clara dependendo da
+    // luminance do swatch. Ambas opções são neutras (TAG), nunca da marca.
+    const labelColor = c.hasAlpha || c.luminance > 0.4 ? BBO_CHROME.ink : BBO_CHROME.bg;
     return `
       <g>
         ${fillRect}
         <rect x="${x}" y="${y}" width="${cardW}" height="${swatchH}" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
-        <text x="${x + 16}" y="${y + swatchH - 18}" font-family="ui-monospace, Menlo, monospace" font-size="13" fill="${labelColor}">${c.hasAlpha ? c.rgb.cssAlpha : c.hex}</text>
-        <text x="${x + 12}" y="${y + swatchH + 26}" font-family="Spectral, Georgia, serif" font-size="18" font-weight="500" fill="#1C1917">${escapeXml(c.label)}</text>
-        <text x="${x + 12}" y="${y + swatchH + 48}" font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#7a7a7a">${c.id}${c.framerPath ? ` · ${escapeXml(c.framerPath)}` : ""}</text>
-        <text x="${x + 12}" y="${y + swatchH + 68}" font-family="ui-monospace, Menlo, monospace" font-size="10" fill="#9a9a9a">${c.rgb.css} · ${c.hsl.css}</text>
+        <text x="${x + 16}" y="${y + swatchH - 18}" font-family="${BBO_CHROME.fontMono}" font-size="13" fill="${labelColor}">${c.hasAlpha ? c.rgb.cssAlpha : c.hex}</text>
+        <text x="${x + 12}" y="${y + swatchH + 26}" font-family="${BBO_CHROME.fontDisplay}" font-size="18" font-weight="500" fill="${BBO_CHROME.ink}">${escapeXml(c.label)}</text>
+        <text x="${x + 12}" y="${y + swatchH + 48}" font-family="${BBO_CHROME.fontMono}" font-size="11" fill="${BBO_CHROME.inkSoft}">${c.id}${c.framerPath ? ` · ${escapeXml(c.framerPath)}` : ""}</text>
+        <text x="${x + 12}" y="${y + swatchH + 68}" font-family="${BBO_CHROME.fontMono}" font-size="10" fill="${BBO_CHROME.inkSoft}">${c.rgb.css} · ${c.hsl.css}</text>
       </g>`;
   }).join("\n");
 
@@ -617,16 +637,16 @@ function buildSwatchSvg(ctx) {
 <svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
   <defs>
     <pattern id="checker" width="20" height="20" patternUnits="userSpaceOnUse">
-      <rect width="20" height="20" fill="#FFFFFF"/>
-      <rect width="10" height="10" fill="#E5E4DE"/>
-      <rect x="10" y="10" width="10" height="10" fill="#E5E4DE"/>
+      <rect width="20" height="20" fill="${BBO_CHROME.bgWhite}"/>
+      <rect width="10" height="10" fill="${BBO_CHROME.line}"/>
+      <rect x="10" y="10" width="10" height="10" fill="${BBO_CHROME.line}"/>
     </pattern>
   </defs>
-  <rect width="100%" height="100%" fill="#F5F0EA"/>
-  <text x="${padding}" y="${padding + 10}" font-family="Spectral, Georgia, serif" font-size="42" font-weight="300" fill="#1C1917">${escapeXml(manifest.name)}</text>
-  <text x="${padding}" y="${padding + 50}" font-family="ui-monospace, Menlo, monospace" font-size="14" fill="#7a7a7a">Palette · ${palette.length} cores · gerado ${new Date().toISOString().slice(0, 10)}</text>
+  <rect width="100%" height="100%" fill="${BBO_CHROME.bg}"/>
+  <text x="${padding}" y="${padding + 10}" font-family="${BBO_CHROME.fontDisplay}" font-size="42" font-weight="300" fill="${BBO_CHROME.ink}">${escapeXml(manifest.name)}</text>
+  <text x="${padding}" y="${padding + 50}" font-family="${BBO_CHROME.fontMono}" font-size="14" fill="${BBO_CHROME.inkSoft}">Palette · ${palette.length} cores · gerado ${new Date().toISOString().slice(0, 10)}</text>
   ${cards}
-  <text x="${padding}" y="${h - padding / 2}" font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#9a9a9a">Swatches sobre fundo /Cream (#F5F0EA). Padrão xadrez = transparência.</text>
+  <text x="${padding}" y="${h - padding / 2}" font-family="${BBO_CHROME.fontMono}" font-size="11" fill="${BBO_CHROME.inkSoft}">Padrão xadrez = transparência. Folha gerada pelo Bionic Brand OS.</text>
 </svg>`;
 }
 
@@ -713,6 +733,12 @@ function buildAccessibilityMd(ctx, contrast) {
 function buildPrintSpec(ctx) {
   const { manifest, palette } = ctx;
   const opaque = palette.filter((c) => !c.hasAlpha);
+  const accentColors = palette.filter((c) => c.group === "accent" && !c.hasAlpha);
+  const accentLabel = accentColors[0]?.label ?? "accent";
+  const darkSurfaces = opaque.filter(
+    (c) => c.group === "surface" && c.luminance < 0.2,
+  );
+
   const lines = [
     `# Especificação para gráfica — ${manifest.name}`,
     "",
@@ -720,10 +746,14 @@ function buildPrintSpec(ctx) {
     "",
     "## Recomendações gerais",
     "",
-    "- Imprimir sobre papel offset 120 g/m² ou superior. Para o /Accent (bronze), papel não-revestido absorve melhor a cor.",
+    "- Imprimir sobre papel offset 120 g/m² ou superior. Substratos não-revestidos absorvem melhor cores acromáticas e quentes.",
     "- Usar perfil ICC **FOGRA39** ou **GRACoL 2013** para impressão comercial. Coated/Uncoated conforme substrato.",
-    "- O /Accent (#A6783E, bronze maduro) tende a virar mostarda em CMYK barato. Considere **spot color Pantone** correspondente em peças críticas (ver sugestão abaixo).",
-    "- Preto canônico é **warm black** #1C1917 — não usar K100 puro; aplicar rich black 30C 30M 30Y 100K para densidade visual sem virar cool.",
+    accentColors.length
+      ? `- Acentos cromáticos saturados (ex: ${accentLabel}) podem deslocar matiz em CMYK barato. Considere **spot color Pantone** correspondente em peças críticas (ver sugestão por cor abaixo).`
+      : null,
+    darkSurfaces.length
+      ? `- Para pretos profundos (ex: ${darkSurfaces[0].label}, \`${darkSurfaces[0].hex}\`), evite K100 puro — use **rich black** \`C30 M30 Y30 K100\` para densidade visual sem virar fosco.`
+      : null,
     "",
     "## Cores e equivalências",
     "",
@@ -751,24 +781,36 @@ function buildPrintSpec(ctx) {
     "",
     "## Checklist do operador",
     "",
-    "- [ ] Provar /Accent em prova impressa (não confiar no monitor).",
-    "- [ ] Verificar registro entre tintas — bronze pode marcar fora de eixo.",
-    "- [ ] Usar warm black (rich black) em fundos extensos, K100 puro fica chumbo demais.",
-    "- [ ] Cremes (#F5F0EA) precisam de tinta amarela equilibrada — checar dot gain.",
+    accentColors.length
+      ? `- [ ] Provar ${accentLabel} em prova impressa (não confiar no monitor).`
+      : null,
+    accentColors.length
+      ? `- [ ] Verificar registro entre tintas onde o ${accentLabel.toLowerCase()} aparecer — pode marcar fora de eixo.`
+      : null,
+    darkSurfaces.length
+      ? "- [ ] Para fundos extensos escuros, usar rich black em vez de K100 puro."
+      : null,
+    "- [ ] Cores warm sutis precisam de balance correto de amarelo — checar dot gain.",
     "- [ ] Para grandes áreas chapadas, considerar varnish ou laminação fosca para preservar elegância.",
     "",
-  ];
+  ].filter(Boolean);
   return lines.join("\n");
 }
 
 function suggestPantone(rgb) {
-  // Hand-curated for Betina's palette; generic fallback otherwise
+  // Tabela hand-curated de equivalências aproximadas para HEX comuns que
+  // tendem a aparecer em paletas BBO. Não é matching algorítmico Lab×Lab —
+  // só uma sugestão pra economizar consulta no fan deck. Sempre validar
+  // com Pantone Solid Coated/Uncoated físico antes de fechar tiragem.
   const known = {
-    "#A6783E": "Pantone 7568 C (bronze) ou 873 C (metallic gold) para acabamento metalizado",
-    "#1C1917": "Pantone Black 6 C (warm black)",
+    "#FFFFFF": "Branco do papel (não imprimir)",
+    "#000000": "Pantone Black C",
+    "#1C1917": "Pantone Black 6 C — neutro quente",
+    "#080A09": "Pantone Black C ou Black 6 C",
     "#F5F0EA": "Pantone 9143 C ou Warm Gray 1 C",
     "#E5E4DE": "Pantone Warm Gray 2 C",
-    "#FFFFFF": "Branco do papel (não imprimir)",
+    "#A6783E": "Pantone 7568 C ou 873 C (acabamento metalizado)",
+    "#CA8A04": "Pantone 124 C ou 7555 C",
   };
   const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
   return known[hex] || null;
@@ -776,7 +818,32 @@ function suggestPantone(rgb) {
 
 function buildBrandOwnerGuide(ctx) {
   const { manifest, palette } = ctx;
-  const accentColor = palette.find((c) => c.id === "accent.default");
+  const surfaceColors = palette.filter((c) => c.group === "surface" && !c.hasAlpha);
+  const accentColors = palette.filter((c) => c.group === "accent" && !c.hasAlpha);
+  const accentLabel = accentColors[0]?.label ?? "accent";
+
+  // Frase de resumo derivada da estrutura real da paleta — sem nomes fantasia
+  // específicos de uma marca ("bege pedra", "warm black"), só hex + label.
+  const summarySentence = (() => {
+    const surfaceList = surfaceColors
+      .slice(0, 4)
+      .map((c) => `**${c.label}** \`${c.hex}\``)
+      .join(", ");
+    const accentList = accentColors.length
+      ? accentColors.map((c) => `**${c.label}** \`${c.hex}\``).join(" + ")
+      : null;
+    const surfacePart = surfaceList ? `Superfícies: ${surfaceList}.` : "";
+    const accentPart = accentList ? ` Acento: ${accentList}.` : "";
+    return `${surfacePart}${accentPart} Qualquer cor fora dessas em peça oficial: recusar.`.trim();
+  })();
+
+  const accentRules = accentColors.length
+    ? [
+        `- ${accentLabel} como fundo de botão primário (descaracteriza a hierarquia)`,
+        `- ${accentLabel} em texto corrido (prejudica leitura)`,
+        `- Mais de 2 usos do ${accentLabel.toLowerCase()} por tela/peça`,
+      ]
+    : [];
 
   return [
     `# Como aprovar uma peça — ${manifest.name}`,
@@ -785,7 +852,7 @@ function buildBrandOwnerGuide(ctx) {
     "",
     "## A paleta em uma frase",
     "",
-    `**Bege pedra** como cor-âncora, **warm black** e **cream** como pares pra texto, e um **bronze dessaturado** como única cor de acento. É isso. Fornecedor que entregar peça com cor fora dessas, recusar.`,
+    summarySentence,
     "",
     "## Cores que devem aparecer",
     "",
@@ -804,19 +871,19 @@ function buildBrandOwnerGuide(ctx) {
     "",
     "- Cor que não está na lista acima",
     "- Gradiente de qualquer tipo",
-    "- Bronze como fundo de botão (descaracteriza)",
-    "- Bronze em texto corrido (prejudica leitura)",
-    "- Mais de 2 usos do bronze por tela/peça",
+    ...accentRules,
     "- Sombras (a marca não usa)",
-    "- Curvas decorativas além do raio de 6px (exclusivo de botões)",
+    "- Curvas decorativas além do raio padrão de botões",
     "",
     "## Quer entender mais a fundo?",
     "",
     "- **Por que essas cores e não outras** → leia `Histórico das decisões cromáticas.md` (mesma pasta).",
-    "- **Por que o bronze tem regras tão estritas** → leia `Regras do bronze (accent).md` (mesma pasta).",
+    accentColors.length
+      ? "- **Por que o accent tem regras tão estritas** → leia `Regras do accent.md` (mesma pasta)."
+      : null,
     "- **Visão geral pra mostrar a alguém** → abra `Catálogo visual da paleta.png` (mesma pasta).",
     "",
-  ].join("\n");
+  ].filter(Boolean).join("\n");
 }
 
 function buildAiContext(ctx) {
@@ -894,7 +961,7 @@ function buildRationaleDoc(ctx) {
   lines.push(
     "---",
     "",
-    "Por que documentar isto: as decisões cromáticas que **não** foram tomadas são tão importantes quanto as que foram. Quando alguém propuser \"e se a gente colorir o CTA de bronze?\", a resposta já está aqui.",
+    "Por que documentar isto: as decisões cromáticas que **não** foram tomadas são tão importantes quanto as que foram. Quando alguém propuser usar uma cor de forma que já foi rejeitada antes, a resposta está aqui.",
     "",
   );
   return lines.join("\n");
@@ -961,7 +1028,7 @@ function buildReadme(ctx) {
     "",
     "### Sou o(a) **dono(a) da marca** — quero aprovar peças",
     "→ Abra **`01 — Para aprovar e decidir/`**",
-    "Comece pelo `Catálogo visual da paleta.png`. Depois leia `Como aprovar uma peça.md` e `Regras do bronze (accent).md`.",
+    "Comece pelo `Catálogo visual da paleta.png`. Depois leia `Como aprovar uma peça.md` e `Regras do accent.md`.",
     "",
     "### Sou **designer** (Figma, Adobe, Inkscape, etc.)",
     "→ Abra **`02 — Para design/`**",
@@ -1000,7 +1067,7 @@ function buildReadme(ctx) {
     "│   ├── Catálogo visual da paleta.png",
     "│   ├── Catálogo visual da paleta.svg",
     "│   ├── Como aprovar uma peça.md",
-    "│   ├── Regras do bronze (accent).md",
+    "│   ├── Regras do accent.md",
     "│   └── Histórico das decisões cromáticas.md",
     "│",
     "├── 02 — Para design/",
@@ -1227,7 +1294,7 @@ function buildWebHowto(ctx) {
     "",
     "## Antes de usar — leia",
     "",
-    `- O **${manifest.name === "Betina Weber" ? "bronze (accent)" : "accent"}** tem regras estritas. Veja \`01 — Para aprovar e decidir/Regras do bronze (accent).md\`.`,
+    "- O **accent** tem regras estritas. Veja `01 — Para aprovar e decidir/Regras do accent.md`.",
     "- A auditoria de contraste WCAG está no mesmo nível desta pasta — `Contraste WCAG (relatório legível).md`.",
     "",
   ].join("\n");
@@ -1395,13 +1462,15 @@ function buildPrintJson(ctx) {
   );
 }
 
+// Notas de impressão por papel da cor no sistema, sem assumir matiz específico
+// (bronze, warm black, etc.) — escala pra qualquer marca que siga o schema.
 function printingNoteFor(id) {
-  if (id === "accent.default")
-    return "Bronze metálico ideal: Pantone 8383 C ou hot stamping bronze. Em CMYK puro perde o brilho.";
-  if (id === "surface.inverse")
-    return "Para offset: usar rich black C30 M30 Y30 K100, evitar K100 puro (fica cinza fosco).";
+  if (id.startsWith("accent."))
+    return "Acentos saturados podem deslocar matiz em CMYK barato. Pra peças críticas, considere spot color Pantone correspondente ou acabamento metalizado/hot stamping.";
+  if (id === "surface.inverse" || id === "surface.inverseAlt")
+    return "Para fundos extensos: usar rich black (ex: C30 M30 Y30 K100) em vez de K100 puro pra densidade visual sem virar fosco.";
   if (id === "surface.cream" || id === "surface.canvas")
-    return "Cor warm sutil — em papel offset comum tende a esmaecer; preferir couché fosco.";
+    return "Cor de superfície sutil — em papel offset comum tende a esmaecer; preferir couché fosco com balance correto de amarelo.";
   return null;
 }
 
@@ -1658,7 +1727,7 @@ function buildPython(ctx) {
 // Per-color individual swatch SVG — drag & drop into Illustrator/Figma
 function buildSwatchSingleSvg(c) {
   const fill = c.hasAlpha ? c.rgb.cssAlpha : c.hex;
-  const labelColor = (!c.hasAlpha && c.luminance < 0.4) ? "#F5F0EA" : "#1C1917";
+  const labelColor = (!c.hasAlpha && c.luminance < 0.4) ? BBO_CHROME.bg : BBO_CHROME.ink;
   const overlay = c.hasAlpha
     ? `<rect width="400" height="400" fill="url(#checker)"/><rect width="400" height="400" fill="${fill}"/>`
     : `<rect width="400" height="400" fill="${fill}"/>`;
@@ -1666,15 +1735,15 @@ function buildSwatchSingleSvg(c) {
 <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
   <defs>
     <pattern id="checker" width="20" height="20" patternUnits="userSpaceOnUse">
-      <rect width="20" height="20" fill="#FFFFFF"/>
-      <rect width="10" height="10" fill="#E5E4DE"/>
-      <rect x="10" y="10" width="10" height="10" fill="#E5E4DE"/>
+      <rect width="20" height="20" fill="${BBO_CHROME.bgWhite}"/>
+      <rect width="10" height="10" fill="${BBO_CHROME.line}"/>
+      <rect x="10" y="10" width="10" height="10" fill="${BBO_CHROME.line}"/>
     </pattern>
   </defs>
   ${overlay}
-  <text x="20" y="40" font-family="Georgia, serif" font-size="22" fill="${labelColor}" opacity="0.95">${escapeXml(c.label)}</text>
-  <text x="20" y="62" font-family="ui-monospace, Menlo, monospace" font-size="11" fill="${labelColor}" opacity="0.7">${escapeXml(c.id)}${c.framerPath ? "  ·  " + escapeXml(c.framerPath) : ""}</text>
-  <text x="20" y="380" font-family="ui-monospace, Menlo, monospace" font-size="14" fill="${labelColor}" opacity="0.85">${c.hasAlpha ? escapeXml(c.rgb.cssAlpha) : c.hex}</text>
+  <text x="20" y="40" font-family="${BBO_CHROME.fontDisplay}" font-size="22" fill="${labelColor}" opacity="0.95">${escapeXml(c.label)}</text>
+  <text x="20" y="62" font-family="${BBO_CHROME.fontMono}" font-size="11" fill="${labelColor}" opacity="0.7">${escapeXml(c.id)}${c.framerPath ? "  ·  " + escapeXml(c.framerPath) : ""}</text>
+  <text x="20" y="380" font-family="${BBO_CHROME.fontMono}" font-size="14" fill="${labelColor}" opacity="0.85">${c.hasAlpha ? escapeXml(c.rgb.cssAlpha) : c.hex}</text>
 </svg>
 `;
 }
@@ -1694,11 +1763,11 @@ function buildPrintSheetSvg(ctx) {
   const parts = [
     `<?xml version="1.0" encoding="UTF-8"?>`,
     `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`,
-    `<rect width="100%" height="100%" fill="#FFFFFF"/>`,
-    `<text x="${margin}" y="${margin + 4}" font-family="Georgia, serif" font-size="22" fill="#1C1917">${escapeXml(manifest.name)}</text>`,
-    `<text x="${margin}" y="${margin + 22}" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#1C1917" opacity="0.6">Cores institucionais — folha de impressão (A4)</text>`,
-    `<text x="${margin}" y="${margin + 36}" font-family="Helvetica, Arial, sans-serif" font-size="9" fill="#A6783E">CMYK aproximado · sempre validar com prova de cor antes da tiragem</text>`,
-    `<line x1="${margin}" y1="${margin + 46}" x2="${W - margin}" y2="${margin + 46}" stroke="#1C1917" stroke-opacity="0.2"/>`,
+    `<rect width="100%" height="100%" fill="${BBO_CHROME.bgWhite}"/>`,
+    `<text x="${margin}" y="${margin + 4}" font-family="${BBO_CHROME.fontDisplay}" font-size="22" fill="${BBO_CHROME.ink}">${escapeXml(manifest.name)}</text>`,
+    `<text x="${margin}" y="${margin + 22}" font-family="${BBO_CHROME.fontDisplay}" font-size="10" fill="${BBO_CHROME.ink}" opacity="0.6">Cores institucionais — folha de impressão (A4)</text>`,
+    `<text x="${margin}" y="${margin + 36}" font-family="${BBO_CHROME.fontDisplay}" font-size="9" fill="${BBO_CHROME.inkSoft}">CMYK aproximado · sempre validar com prova de cor antes da tiragem</text>`,
+    `<line x1="${margin}" y1="${margin + 46}" x2="${W - margin}" y2="${margin + 46}" stroke="${BBO_CHROME.ink}" stroke-opacity="0.2"/>`,
   ];
 
   const startY = margin + 60;
@@ -1708,29 +1777,29 @@ function buildPrintSheetSvg(ctx) {
     const x = margin + col * (cardW + colGap);
     const y = startY + row * (cardH + rowGap);
     const c = opaque[i];
-    const overTone = c.luminance < 0.4 ? "#FFFFFF" : "#1C1917";
+    const overTone = c.luminance < 0.4 ? BBO_CHROME.bgWhite : BBO_CHROME.ink;
     const pms = suggestPantone(c.rgb);
 
     parts.push(`<g transform="translate(${x}, ${y})">`);
     parts.push(`<rect width="${cardW}" height="90" fill="${c.hex}"/>`);
-    parts.push(`<text x="10" y="22" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="${overTone}">${escapeXml(c.label)}</text>`);
-    parts.push(`<text x="${cardW - 10}" y="${90 - 10}" text-anchor="end" font-family="Menlo, monospace" font-size="10" fill="${overTone}" opacity="0.85">${c.hex}</text>`);
-    parts.push(`<rect y="90" width="${cardW}" height="${cardH - 90}" fill="#FFFFFF" stroke="#1C1917" stroke-opacity="0.15"/>`);
+    parts.push(`<text x="10" y="22" font-family="${BBO_CHROME.fontDisplay}" font-size="11" fill="${overTone}">${escapeXml(c.label)}</text>`);
+    parts.push(`<text x="${cardW - 10}" y="${90 - 10}" text-anchor="end" font-family="${BBO_CHROME.fontMono}" font-size="10" fill="${overTone}" opacity="0.85">${c.hex}</text>`);
+    parts.push(`<rect y="90" width="${cardW}" height="${cardH - 90}" fill="${BBO_CHROME.bgWhite}" stroke="${BBO_CHROME.ink}" stroke-opacity="0.15"/>`);
     let ty = 108;
-    parts.push(`<text x="10" y="${ty}" font-family="Menlo, monospace" font-size="8.5" fill="#1C1917">RGB ${c.rgb.r} · ${c.rgb.g} · ${c.rgb.b}</text>`);
+    parts.push(`<text x="10" y="${ty}" font-family="${BBO_CHROME.fontMono}" font-size="8.5" fill="${BBO_CHROME.ink}">RGB ${c.rgb.r} · ${c.rgb.g} · ${c.rgb.b}</text>`);
     ty += 14;
-    parts.push(`<text x="10" y="${ty}" font-family="Menlo, monospace" font-size="8.5" fill="#1C1917">CMYK ${c.cmyk.c} · ${c.cmyk.m} · ${c.cmyk.y} · ${c.cmyk.k}</text>`);
+    parts.push(`<text x="10" y="${ty}" font-family="${BBO_CHROME.fontMono}" font-size="8.5" fill="${BBO_CHROME.ink}">CMYK ${c.cmyk.c} · ${c.cmyk.m} · ${c.cmyk.y} · ${c.cmyk.k}</text>`);
     ty += 14;
-    parts.push(`<text x="10" y="${ty}" font-family="Menlo, monospace" font-size="8.5" fill="#1C1917">LAB ${c.lab.l} · ${c.lab.a} · ${c.lab.b}</text>`);
+    parts.push(`<text x="10" y="${ty}" font-family="${BBO_CHROME.fontMono}" font-size="8.5" fill="${BBO_CHROME.ink}">LAB ${c.lab.l} · ${c.lab.a} · ${c.lab.b}</text>`);
     ty += 14;
-    parts.push(`<text x="10" y="${ty}" font-family="Menlo, monospace" font-size="8.5" fill="#1C1917">HSL ${c.hsl.h}° · ${c.hsl.s}% · ${c.hsl.l}%</text>`);
+    parts.push(`<text x="10" y="${ty}" font-family="${BBO_CHROME.fontMono}" font-size="8.5" fill="${BBO_CHROME.ink}">HSL ${c.hsl.h}° · ${c.hsl.s}% · ${c.hsl.l}%</text>`);
     if (pms) {
       ty += 18;
-      parts.push(`<text x="10" y="${ty}" font-family="Menlo, monospace" font-size="8" fill="#A6783E">PMS ~ ${escapeXml(pms.split("(")[0].trim())}</text>`);
+      parts.push(`<text x="10" y="${ty}" font-family="${BBO_CHROME.fontMono}" font-size="8" fill="${BBO_CHROME.inkSoft}">PMS ~ ${escapeXml(pms.split("(")[0].trim())}</text>`);
     }
     parts.push("</g>");
   }
-  parts.push(`<text x="${margin}" y="${H - 18}" font-family="Helvetica, Arial, sans-serif" font-size="8" fill="#1C1917" opacity="0.55">Pantone, CMYK e LAB são aproximações sem ICC. Para impressão crítica, usar Pantone Solid Coated ou prova de cor calibrada (FOGRA39/GRACoL).</text>`);
+  parts.push(`<text x="${margin}" y="${H - 18}" font-family="${BBO_CHROME.fontDisplay}" font-size="8" fill="${BBO_CHROME.ink}" opacity="0.55">Pantone, CMYK e LAB são aproximações sem ICC. Para impressão crítica, usar Pantone Solid Coated ou prova de cor calibrada (FOGRA39/GRACoL).</text>`);
   parts.push("</svg>");
   return parts.join("\n");
 }
