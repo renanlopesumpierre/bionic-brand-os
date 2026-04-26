@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
-import { getClient } from "@/lib/content";
+import { getClient, listClients } from "@/lib/content";
 import { TagLogo } from "@/components/tag";
 import { ClientNav } from "./_components/client-nav";
 
@@ -74,5 +74,5 @@ export default async function ClientLayout({ children, params }: Props) {
 }
 
 export function generateStaticParams() {
-  return [{ client: "betina-weber" }];
+  return listClients().map((m) => ({ client: m.slug }));
 }

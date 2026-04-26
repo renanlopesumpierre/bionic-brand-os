@@ -153,7 +153,7 @@ export default async function ApplicationPage({ params }: Props) {
         <p className="text-base text-[--color-fg-muted] max-w-3xl mb-10">
           Antes de aplicar, três conjuntos de conceitos aparecem em toda peça.
           Eles trabalham juntos: <em>vetor verbal</em> guia o tom, <em>pilar</em>{" "}
-          conecta ao Growth Method, <em>arquétipo</em> define a postura.
+          conecta ao {method.name}, <em>arquétipo</em> define a postura.
         </p>
 
         <div className="space-y-12">
@@ -183,7 +183,7 @@ export default async function ApplicationPage({ params }: Props) {
           {/* Pilares B/C/W */}
           <div>
             <p className="type-mono text-[--color-fg] mb-4">
-              Pilares do Growth Method — conectam ao método
+              Pilares do {method.name} — conectam ao método
             </p>
             <div className="grid md:grid-cols-3 gap-[1px] bg-[--color-border]">
               {PILLAR_KEYS.map((key) => {

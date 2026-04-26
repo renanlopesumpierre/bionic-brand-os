@@ -43,9 +43,11 @@ export default async function ClientOverview({ params }: Props) {
     },
     {
       index: "02",
-      label: "The Growth Method",
+      label: brandSystem.method.name,
       href: `/${slug}/method`,
-      caption: "Business · Consciousness · Wellness",
+      caption: Object.values(brandSystem.method.pillars)
+        .map((p) => (p as { label: string }).label)
+        .join(" · "),
       group: "Sistema",
     },
     {
@@ -79,7 +81,7 @@ export default async function ClientOverview({ params }: Props) {
           <div className="relative aspect-[4/5] lg:aspect-auto lg:min-h-[600px]">
             <Image
               src={`/clients/${slug}/photos/hero2.jpg`}
-              alt="Betina Weber"
+              alt={manifest.name}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
@@ -90,7 +92,7 @@ export default async function ClientOverview({ params }: Props) {
           <div className="surface-deep flex flex-col justify-between p-10 md:p-16 lg:p-20">
             <div>
               <p className="type-eyebrow type-bullet opacity-70">
-                Strategic Growth Advisory
+                {manifest.category}
               </p>
               <h1 className="mt-10 max-w-[14ch]">
                 {manifest.essence.pt}

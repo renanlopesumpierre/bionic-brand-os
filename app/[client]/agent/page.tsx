@@ -48,9 +48,9 @@ const CAPABILITIES = [
       "As 8 frases sagradas invariantes",
       "Pool expandido de frases aprovadas",
       "Léxico nuclear e léxico proibido",
-      "Regras do acento bronze e tipografia",
+      "Regras do acento e tipografia",
       "Mensagens canônicas por oferta e público",
-      "O que requer aprovação da Betina",
+      "O que requer aprovação do(a) dono(a) da marca",
     ],
   },
   {
@@ -86,46 +86,47 @@ const HOW_IT_WORKS = [
   },
 ];
 
-const SUGGESTIONS = [
-  {
-    category: "Copy",
-    prompts: [
-      "Escreva um post de autoridade para Instagram sobre clareza de liderança.",
-      "Crie um carrossel de 8 slides sobre o pilar Consciousness para LinkedIn.",
-      "Escreva um email de abertura de proposta para um empresário em expansão.",
-      "Três opções de headline para a página de imersões, gabarito D.",
-    ],
-  },
-  {
-    category: "Validação",
-    prompts: [
-      "Valide esse texto contra os 9 critérios antes de publicar.",
-      "Esse copy usa alguma palavra do léxico proibido? Reescreva o que falhar.",
-      "Rode os 6 vetores de tom nessa peça e aponte onde ela perde sofisticação.",
-    ],
-  },
-  {
-    category: "Governança",
-    prompts: [
-      "Quais são as 8 frases sagradas e quando usar cada uma?",
-      "Qual frase do pool aprovado serve para abrir uma proposta de hospitalidade de luxo?",
-      "O que nunca pode aparecer em comunicação institucional da Betina?",
-    ],
-  },
-  {
-    category: "Adaptação",
-    prompts: [
-      "Reescreva esse post em inglês no registro editorial denso.",
-      "Adapte essa mensagem para médicos e profissionais de saúde.",
-      "Qual a diferença de abordagem para o pilar Business vs. Wellness nesse contexto?",
-    ],
-  },
-];
-
 export default async function AgentPage({ params }: Props) {
   const { client: slug } = await params;
   const client = getClient(slug);
   if (!client) notFound();
+
+  const brandName = client.manifest.name;
+  const SUGGESTIONS = [
+    {
+      category: "Copy",
+      prompts: [
+        "Escreva um post de autoridade para Instagram sobre clareza de liderança.",
+        "Crie um carrossel de 8 slides sobre o pilar Consciousness para LinkedIn.",
+        "Escreva um email de abertura de proposta para um empresário em expansão.",
+        "Três opções de headline para a página de imersões, gabarito D.",
+      ],
+    },
+    {
+      category: "Validação",
+      prompts: [
+        "Valide esse texto contra os 9 critérios antes de publicar.",
+        "Esse copy usa alguma palavra do léxico proibido? Reescreva o que falhar.",
+        "Rode os 6 vetores de tom nessa peça e aponte onde ela perde sofisticação.",
+      ],
+    },
+    {
+      category: "Governança",
+      prompts: [
+        "Quais são as 8 frases sagradas e quando usar cada uma?",
+        "Qual frase do pool aprovado serve para abrir uma proposta de hospitalidade de luxo?",
+        `O que nunca pode aparecer em comunicação institucional de ${brandName}?`,
+      ],
+    },
+    {
+      category: "Adaptação",
+      prompts: [
+        "Reescreva esse post em inglês no registro editorial denso.",
+        "Adapte essa mensagem para médicos e profissionais de saúde.",
+        "Qual a diferença de abordagem para o pilar Business vs. Wellness nesse contexto?",
+      ],
+    },
+  ];
 
   return (
     <div>

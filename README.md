@@ -125,4 +125,4 @@ Set env vars in the Vercel dashboard:
 
 ---
 
-_Clareza estratégica para crescimento sustentável. Strategic clarity for sustainable growth._
+_Marcas que conversam com humanos e máquinas. Brands that speak both human and machine._

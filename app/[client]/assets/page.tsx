@@ -12,10 +12,23 @@ export async function generateMetadata({ params }: Props) {
   return c ? { title: `${c.manifest.name} · Ativos e API` } : {};
 }
 
+// Extrai a primeira família de uma stack CSS — "Spectral, 'Times', serif" → "Spectral".
+function primaryFamily(stack: string | undefined): string {
+  if (!stack) return "";
+  return (stack.split(",")[0] ?? "").replace(/['"]/g, "").trim();
+}
+
 export default async function AssetsPage({ params }: Props) {
   const { client: slug } = await params;
   const client = getClient(slug);
   if (!client) notFound();
+
+  const fontFamilies = [
+    primaryFamily(client.tokens.font?.family?.serif?.value),
+    primaryFamily(client.tokens.font?.family?.sans?.value),
+  ]
+    .filter(Boolean)
+    .join(" + ");
 
   const apis = [
     {
@@ -68,7 +81,7 @@ export default async function AssetsPage({ params }: Props) {
       format: "ZIP",
     },
     {
-      label: "Tipografia (Spectral + TASA Orbiter)",
+      label: fontFamilies ? `Tipografia (${fontFamilies})` : "Tipografia",
       href: `/clients/${slug}/downloads/${slug}-brand-fonts.zip`,
       filename: `${slug}-brand-fonts.zip`,
       format: "ZIP",

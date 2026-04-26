@@ -42,7 +42,7 @@ export function ClientNav({
       step: "I",
       items: [
         { index: 1, label: "Essência", href: `${base}/essence`, description: "Núcleo estratégico" },
-        { index: 2, label: "Método", href: `${base}/method`, description: "The Growth Method" },
+        { index: 2, label: "Método", href: `${base}/method`, description: "Método proprietário" },
         { index: 3, label: "Arquitetura", href: `${base}/architecture`, description: "Posicionamento e ofertas" },
         { index: 4, label: "Público", href: `${base}/audience`, description: "Persona, perfis, tribos" },
       ],

@@ -230,7 +230,7 @@ export function BrandAgentChat({ clientSlug, clientName, suggestions = [] }: Pro
           <div className="max-w-3xl mx-auto">
             <h2 className="mb-2">Pergunte à marca.</h2>
             <p className="text-[--color-fg-muted] mb-10 max-w-xl leading-relaxed">
-              O agente conhece cada regra, frase sagrada e gabarito do sistema Betina Weber.
+              O agente conhece cada regra, frase sagrada e gabarito do sistema {clientName}.
               Escreva o que precisa ou use um dos prompts abaixo.
             </p>
 
