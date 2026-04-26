@@ -28,7 +28,21 @@
     "accent": {
       "default": { "value": "#A6783E", "framerPath": "/Accent", "notes": "v1.1 NOVO — bronze maduro, ~60% saturação" },
       "subtle":  { "value": "rgba(166, 120, 62, 0.60)", "framerPath": "/Accent Subtle", "notes": "Hover states e transições" },
-      "faint":   { "value": "rgba(166, 120, 62, 0.10)", "framerPath": "/Accent Faint", "notes": "Highlights de fundo editorial raríssimos" }
+      "faint":   { "value": "rgba(166, 120, 62, 0.10)", "framerPath": "/Accent Faint", "notes": "Highlights de fundo editorial raríssimos" },
+      "_meta": {
+        "label": "Accent · bronze calibrado · v1.1",
+        "description": "Bronze maduro a ~60% saturação. Funciona como assinatura editorial — nunca em CTA primário, heading ou body. Máximo 2 aparições por viewport."
+      }
+    },
+    "legacyWeb": {
+      "_meta": {
+        "label": "Tons da web atual",
+        "description": "Cores ainda em uso no betinaweber.com hoje. O accent canônico (bronze v1.1) ainda não foi aplicado na produção — o site usa o amarelo mostarda saturado original. Usar essas cores apenas até a migração ser concluída."
+      },
+      "amareloCta":       { "value": "#CA8A04", "name": "Amarelo CTA", "context": "Botão principal, eyebrows, links em destaque", "notes": "Acento original do rascunho pessoal. Usado em CTAs primários e destaques editoriais (\"Method\" no hero)." },
+      "amareloHighlight": { "value": "#F0C040", "name": "Amarelo highlight", "context": "Hover states, ornamentos editoriais", "notes": "Variante mais clara, função decorativa pontual em hovers e ornamentos." },
+      "warmGrey":         { "value": "#A8998C", "name": "Warm grey", "context": "Texto secundário sobre cream, dividers", "notes": "Cinza pedra warm derivado do canvas. Usado como texto suave e divisores em fundo cream." },
+      "creamOverDark":    { "value": "#F5F0EA", "name": "Cream over dark", "context": "Footer, áreas inversas", "notes": "Texto e detalhes sobre Dark — substitui white puro." }
     },
     "border": {
       "onLight": { "value": "rgba(22, 35, 27, 0.16)", "framerPath": "/Border Dark" },
@@ -84,23 +98,23 @@
     }
   },
   "typography": {
-    "heading1":    { "framerPath": "/Heading 1",        "tag": "h1", "fontFamily": "serif", "fontWeight": 300, "fontSize": "112px", "lineHeight": "1.1em",  "letterSpacing": "-0.06em", "textAlign": "center", "paragraphSpacing": 0 },
-    "heading1b":   { "framerPath": "/Heading 1b",       "tag": "h1", "fontFamily": "serif", "fontWeight": 300, "fontSize": "77px",  "lineHeight": "1.1em",  "letterSpacing": "-0.06em", "textAlign": "center", "paragraphSpacing": 0 },
-    "heading2":    { "framerPath": "/Heading 2",        "tag": "h2", "fontFamily": "serif", "fontWeight": 300, "fontSize": "68px",  "lineHeight": "1.1em",  "letterSpacing": "-0.06em", "textAlign": "left",   "paragraphSpacing": 40 },
-    "heading3":    { "framerPath": "/Heading 3",        "tag": "h3", "fontFamily": "serif", "fontWeight": 300, "fontSize": "56px",  "lineHeight": "1.05em", "letterSpacing": "-0.04em", "textAlign": "left",   "paragraphSpacing": 40 },
-    "heading4":    { "framerPath": "/Heading 4",        "tag": "h4", "fontFamily": "serif", "fontWeight": 300, "fontSize": "36px",  "lineHeight": "1.15em", "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 40 },
+    "heading1":    { "framerPath": "/Heading 1",        "tag": "h1", "fontFamily": "serif", "fontWeight": 300, "fontSize": "112px", "lineHeight": "1.1em",  "letterSpacing": "-0.06em", "textAlign": "center", "paragraphSpacing": 0,  "sample": "Crescimento exige clareza." },
+    "heading1b":   { "framerPath": "/Heading 1b",       "tag": "h1", "fontFamily": "serif", "fontWeight": 300, "fontSize": "77px",  "lineHeight": "1.1em",  "letterSpacing": "-0.06em", "textAlign": "center", "paragraphSpacing": 0  },
+    "heading2":    { "framerPath": "/Heading 2",        "tag": "h2", "fontFamily": "serif", "fontWeight": 300, "fontSize": "68px",  "lineHeight": "1.1em",  "letterSpacing": "-0.06em", "textAlign": "left",   "paragraphSpacing": 40, "sample": "Três pilares. Um sistema integrado." },
+    "heading3":    { "framerPath": "/Heading 3",        "tag": "h3", "fontFamily": "serif", "fontWeight": 300, "fontSize": "56px",  "lineHeight": "1.05em", "letterSpacing": "-0.04em", "textAlign": "left",   "paragraphSpacing": 40, "sample": "Autoridade calma." },
+    "heading4":    { "framerPath": "/Heading 4",        "tag": "h4", "fontFamily": "serif", "fontWeight": 300, "fontSize": "36px",  "lineHeight": "1.15em", "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 40, "sample": "Profundidade aplicada, decisão precisa." },
     "heading4b":   { "framerPath": "/Heading 4b",       "tag": "h4", "fontFamily": "serif", "fontWeight": 300, "fontSize": "24px",  "lineHeight": "1.2em",  "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 40 },
     "heading5":    { "framerPath": "/Heading 5",        "tag": "h5", "fontFamily": "serif", "fontWeight": 300, "fontSize": "22px",  "lineHeight": "1.2em",  "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 40 },
     "heading6":    { "framerPath": "/Heading 6",        "tag": "h6", "fontFamily": "serif", "fontWeight": 200, "fontSize": "20px",  "lineHeight": "1.2em",  "letterSpacing": "-0.04em", "textAlign": "left",   "paragraphSpacing": 40 },
-    "display":     { "framerPath": "/Display",          "tag": "p",  "fontFamily": "serif", "fontWeight": 300, "fontSize": "78px",  "lineHeight": "1.2em",  "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 20 },
+    "display":     { "framerPath": "/Display",          "tag": "p",  "fontFamily": "serif", "fontWeight": 300, "fontSize": "78px",  "lineHeight": "1.2em",  "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 20, "sample": "The Growth Method." },
     "body2xlSerif":{ "framerPath": "/Body 2XL - Serif", "tag": "p",  "fontFamily": "serif", "fontWeight": 300, "fontSize": "52px",  "lineHeight": "1.15em", "letterSpacing": "-0.05em", "textAlign": "left",   "paragraphSpacing": 20 },
-    "bodyLarge":   { "framerPath": "/Body Large",       "tag": "p",  "fontFamily": "sans",  "fontWeight": 400, "fontSize": "20px",  "lineHeight": "1.3em",  "letterSpacing": "-0.02em", "textAlign": "left",   "paragraphSpacing": 20 },
-    "body":        { "framerPath": "/Body",             "tag": "p",  "fontFamily": "sans",  "fontWeight": 400, "fontSize": "18px",  "lineHeight": "1.3em",  "letterSpacing": "-0.02em", "textAlign": "left",   "paragraphSpacing": 20 },
-    "bodySmall":   { "framerPath": "/Body Small",       "tag": "p",  "fontFamily": "sans",  "fontWeight": 400, "fontSize": "15px",  "lineHeight": "1.3em",  "letterSpacing": "-0.01em", "textAlign": "left",   "paragraphSpacing": 20 },
+    "bodyLarge":   { "framerPath": "/Body Large",       "tag": "p",  "fontFamily": "sans",  "fontWeight": 400, "fontSize": "20px",  "lineHeight": "1.3em",  "letterSpacing": "-0.02em", "textAlign": "left",   "paragraphSpacing": 20, "sample": "Sua presença não é ruidosa. É precisa. Sua autoridade não depende de excesso — depende de leitura, método e profundidade aplicada." },
+    "body":        { "framerPath": "/Body",             "tag": "p",  "fontFamily": "sans",  "fontWeight": 400, "fontSize": "18px",  "lineHeight": "1.3em",  "letterSpacing": "-0.02em", "textAlign": "left",   "paragraphSpacing": 20, "sample": "Crescimento sustentável é o resultado de clareza estratégica, capacidade de execução e maturidade emocional operando como um sistema único." },
+    "bodySmall":   { "framerPath": "/Body Small",       "tag": "p",  "fontFamily": "sans",  "fontWeight": 400, "fontSize": "15px",  "lineHeight": "1.3em",  "letterSpacing": "-0.01em", "textAlign": "left",   "paragraphSpacing": 20, "sample": "Texto secundário, legendas, apoio editorial e descrições inline." },
     "footerMenu":  { "framerPath": "/Footer Menu",      "tag": "p",  "fontFamily": "sans",  "fontWeight": 400, "fontSize": "16px",  "lineHeight": "1.2em",  "letterSpacing": "-0.01em", "textAlign": "left",   "paragraphSpacing": 20 },
     "menuLink":    { "framerPath": "/Menu Link",        "tag": "p",  "fontFamily": "sans",  "fontWeight": 500, "fontSize": "15px",  "lineHeight": "1.1em",  "letterSpacing": "0",       "textAlign": "left",   "paragraphSpacing": 20 },
     "menuLinkMobile": { "framerPath": "/Menu Link Mobile", "tag": "p", "fontFamily": "serif", "fontWeight": 300, "fontSize": "36px", "lineHeight": "1.2em", "letterSpacing": "-0.05em", "textAlign": "left", "paragraphSpacing": 20 },
-    "label":       { "framerPath": "/Label",            "tag": "p",  "fontFamily": "sans",  "fontWeight": 500, "fontSize": "15px",  "lineHeight": "1.2em",  "letterSpacing": "0.02em",  "textAlign": "left",   "paragraphSpacing": 20, "textTransform": "uppercase" },
+    "label":       { "framerPath": "/Label",            "tag": "p",  "fontFamily": "sans",  "fontWeight": 500, "fontSize": "15px",  "lineHeight": "1.2em",  "letterSpacing": "0.02em",  "textAlign": "left",   "paragraphSpacing": 20, "textTransform": "uppercase", "sample": "STRATEGIC GROWTH ADVISORY" },
     "labelSmall":  { "framerPath": "/Label Small",      "tag": "p",  "fontFamily": "sans",  "fontWeight": 500, "fontSize": "14px",  "lineHeight": "15px",   "letterSpacing": "0.02em",  "textAlign": "left",   "paragraphSpacing": 20, "textTransform": "uppercase" }
   },
   "typographyRules": {
@@ -412,5 +426,32 @@
     "JobListing":            { "nodeId": "HzngcVsdi" },
     "InteractiveTickerLink": { "nodeId": "Kvko4mfuB" },
     "TickerContent":         { "nodeId": "kf6CG0aBn" }
+  },
+  "visual": {
+    "symbol": {
+      "description": "O símbolo em movimento representa os três pilares do método em rotação contínua — não como ciclo fechado, mas como sistema vivo. A impermanência é o mecanismo, não o problema: é do movimento ininterrupto entre Clareza, Execução e Maturidade que emerge o equilíbrio. A animação não tem início nem fim porque o crescimento sustentável tampouco tem."
+    },
+    "applicationNotes": {
+      "favicon": "Ícone branco sobre warm black. 32×32, 64×64, 192×192.",
+      "appIcon": "iOS / Android. Margem interna de 22% conforme HIG.",
+      "avatar": "Sociais e perfis. Variante accent quando precisar de presença."
+    },
+    "siteUrl": "betinaweber.com"
+  },
+  "visualRules": {
+    "never": [
+      "Gradientes em qualquer elemento",
+      "Accent em CTA primário",
+      "Accent em heading ou body",
+      "Shadows em qualquer surface",
+      "Radius além de 6px (exclusivo de botões)",
+      "Playfair Display ou Inter",
+      "Emojis em material institucional",
+      "Estética mística ou wellness superficial",
+      "Excesso de dourado ou metálico",
+      "Stock Unsplash genérico",
+      "Tom motivacional ou afetado",
+      "Fundo branco puro #FFF (usar canvas warm)"
+    ]
   }
 }
