@@ -1,26 +1,390 @@
 @import "tailwindcss";
 
+/* ============================================================
+   FONTS
+   BDO Grotesk: TAG display/body — local variable font (100..900)
+   IBM Plex Mono: TAG technical labels (next/font/google)
+   Spectral: only used as inline sample inside /[client]/visual
+   TASA Orbiter: only used as inline sample inside /[client]/visual
+   ============================================================ */
+@font-face {
+  font-family: "BDO Grotesk";
+  src: url("/fonts/BDOGrotesk-VF.ttf") format("truetype-variations"),
+       url("/fonts/BDOGrotesk-VF.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================================
+   TAG (single theme — the entire portal)
+   Acromatic palette: off-white #F2F2F2 + black #111111.
+   Cinzas estruturais reservados para cards/dividers, nunca para
+   fundos de seção inteira. Tokens espelhados no DOM real do site
+   thinkinganimalsgroup.framer.website.
+   ============================================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Neutral palette — measured from the framer site */
+  --tag-black: #111111;          /* primary text + bg-inverse */
+  --tag-mid-grey: #828282;       /* secondary text */
+  --tag-line: #d1d1d1;           /* dividers */
+  --tag-card-grey: #ededed;      /* card surfaces, sutil */
+  --tag-canvas: #f2f2f2;         /* off-white canvas */
+  --tag-warm-white: #faf9f5;     /* alt warm card */
+
+  /* Semantic surfaces — only 3 levels.
+     Cinzas médios são para CARDS individuais (--bg-alt), nunca para
+     fundo de section inteira. */
+  --bg: var(--tag-canvas);       /* canvas dominant */
+  --bg-alt: var(--tag-card-grey); /* cards, recessed elements only */
+  --bg-elevated: #ffffff;         /* white cards (rare) */
+  --bg-inverse: var(--tag-black); /* deep — anchor blocks only */
+
+  --fg: var(--tag-black);
+  --fg-inverse: #f2f2f2;
+  --fg-muted: var(--tag-mid-grey);
+  --fg-faint: var(--tag-line);
+  --fg-on-dark-muted: rgba(255, 255, 255, 0.6);
+  --fg-on-dark-faint: rgba(255, 255, 255, 0.3);
+
+  --border: rgba(17, 17, 17, 0.1);
+  --border-strong: rgba(17, 17, 17, 0.2);
+  --border-on-dark: rgba(255, 255, 255, 0.12);
+  --border-on-dark-strong: rgba(255, 255, 255, 0.22);
+
+  --accent: var(--tag-black);
+  --accent-muted: var(--tag-mid-grey);
+  --accent-on-dark: #ffffff;
+
+  /* Hover overlay (framer pattern) */
+  --hover-overlay: rgba(17, 17, 17, 0.08);
+
+  /* Typography */
+  --font-sans: "BDO Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  --font-serif: "BDO Grotesk", Georgia, serif;
+
+  /* Shape — TAG uses pill buttons (radius 999) and zero radius cards */
+  --radius-pill: 999px;
+  --radius-btn: 999px;
+  --radius-card: 0;
+
+  color-scheme: light;
 }
 
+/* ============================================================
+   TAILWIND THEME MAPPING
+   ============================================================ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-bg-inverse: var(--bg-inverse);
+  --color-bg-elevated: var(--bg-elevated);
+
+  --color-fg: var(--fg);
+  --color-fg-inverse: var(--fg-inverse);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-faint: var(--fg-faint);
+  --color-fg-on-dark-muted: var(--fg-on-dark-muted);
+  --color-fg-on-dark-faint: var(--fg-on-dark-faint);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-border-on-dark: var(--border-on-dark);
+  --color-border-on-dark-strong: var(--border-on-dark-strong);
+
+  --color-accent: var(--accent);
+  --color-accent-muted: var(--accent-muted);
+  --color-accent-on-dark: var(--accent-on-dark);
+
+  --color-tag-black: var(--tag-black);
+  --color-tag-mid: var(--tag-mid-grey);
+  --color-tag-line: var(--tag-line);
+  --color-tag-card: var(--tag-card-grey);
+  --color-tag-canvas: var(--tag-canvas);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+
+  --radius-btn: var(--radius-btn);
+  --radius-pill: var(--radius-pill);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================================
+   BASE
+   Body matches framer: 16/22.4 with -0.04em tracking, demibold-ish
+   weight to give density.
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  background: var(--bg);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "ss02", "cv01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: -0.04em;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* ============================================================
+   TAG TYPE SCALE
+   Mirrors framer scale: 12 / 16 / 18 / 24 / 48 / 62 / 84.
+   Letter-spacing negativo agressivo nos displays.
+   ============================================================ */
+
+/* Display — hero wordmarks */
+.type-display,
+h1 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(3rem, 6vw + 1rem, 5.25rem); /* up to ~84px */
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+/* Heading Large */
+.type-h1,
+h2 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(2rem, 4vw + 0.5rem, 3.875rem); /* up to ~62px */
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+/* Heading Medium */
+.type-h2,
+h3 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.2vw + 0.5rem, 2.25rem); /* up to ~36/48 px range */
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+/* Heading Regular */
+.type-h3,
+h4 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 0.6vw + 1rem, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* Heading Small */
+.type-h4,
+h5 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+
+/* Paragraph styles */
+.type-lead {
+  font-size: clamp(1.125rem, 0.6vw + 1rem, 1.375rem);
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: var(--fg-muted);
+}
+
+.type-p {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.04em;
+}
+
+.type-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+}
+
+/* Mono label (IBM Plex Mono) */
+.type-mono {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.type-eyebrow {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* Bullet eyebrow: "• texto do eyebrow" — assinatura do design TAG */
+.type-bullet::before {
+  content: "• ";
+  color: currentColor;
+  margin-right: 0.25rem;
+}
+
+/* ============================================================
+   SECTION SURFACES (3 níveis apenas)
+   canvas (#F2F2F2) — fundo dominante
+   elevated (#FFFFFF) — para CARDS quando precisar elevação
+   deep (#111111) — bloco âncora pontual (1× por página)
+   ============================================================ */
+.surface-canvas {
+  background: var(--bg);
+  color: var(--fg);
+}
+.surface-elevated {
+  background: var(--bg-elevated);
+  color: var(--fg);
+}
+.surface-deep {
+  background: var(--bg-inverse);
+  color: var(--fg-inverse);
+}
+
+/* On dark, remap muted/border tokens automatically */
+.surface-deep {
+  --fg: var(--fg-inverse);
+  --fg-muted: var(--fg-on-dark-muted);
+  --fg-faint: var(--fg-on-dark-faint);
+  --border: var(--border-on-dark);
+  --border-strong: var(--border-on-dark-strong);
+  --accent: var(--accent-on-dark);
+}
+
+/* ============================================================
+   SHARED UTILITIES
+   ============================================================ */
+
+/* Editorial accent divider */
+.editorial-divider {
+  width: 40px;
+  height: 2px;
+  background: var(--accent);
+  margin: 0;
+}
+
+/* Pill button (TAG standard) */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+  white-space: nowrap;
+}
+
+.btn-pill-primary {
+  background: var(--fg);
+  color: var(--bg);
+}
+.btn-pill-primary:hover {
+  background: #000;
+}
+
+.btn-pill-secondary {
+  background: var(--bg-alt);
+  color: var(--fg);
+}
+.btn-pill-secondary:hover {
+  background: #e3e3e3;
+}
+
+.btn-pill-ghost {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border-strong);
+}
+.btn-pill-ghost:hover {
+  background: var(--hover-overlay);
+}
+
+.btn-pill-inverse,
+.btn-pill-inverse:link,
+.btn-pill-inverse:visited {
+  background-color: #f2f2f2 !important;
+  color: #111111 !important;
+}
+.btn-pill-inverse:hover {
+  background-color: #ffffff !important;
+  color: #111111 !important;
+}
+
+/* Container widths (generous, editorial) */
+.container-wide {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+.container-prose {
+  max-width: 72ch;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+/* Layout: label-left + content-right (TAG Style Guide pattern) */
+.row-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding-block: 3.5rem;
+}
+@media (min-width: 900px) {
+  .row-section {
+    grid-template-columns: 180px 1fr;
+    gap: 3rem;
+    padding-block: 4.5rem;
+  }
+}
+.row-section + .row-section {
+  border-top: 1px solid var(--border);
+}
+.row-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  padding-top: 0.25rem;
+}
+
+/* Selection */
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }

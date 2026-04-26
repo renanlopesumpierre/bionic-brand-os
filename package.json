@@ -1,17 +1,35 @@
 {
-  "name": "brand-interface",
+  "name": "bionic-brand-os",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync:content": "bash scripts/sync-content.sh",
+    "build:brand-zips": "node scripts/build-brand-zip.mjs",
+    "build:brand-fonts": "node scripts/build-brand-fonts-zip.mjs",
+    "build:brand-colors": "node scripts/build-brand-colors-zip.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.91.0",
+    "@google/generative-ai": "^0.24.1",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.37.0",
+    "clsx": "^2.1.1",
+    "gray-matter": "^4.0.3",
+    "groq-sdk": "^1.1.2",
+    "lucide-react": "^1.11.0",
     "next": "16.2.4",
+    "openai": "^6.34.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "resend": "^6.12.2",
+    "tailwind-merge": "^3.5.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -20,6 +38,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

@@ -32,9 +32,11 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
-# vercel
-.vercel
+# vercel — ignore tudo exceto o vínculo do projeto (orgId/projectId)
+.vercel/*
+!.vercel/project.json
 
 # typescript
 *.tsbuildinfo

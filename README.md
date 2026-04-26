@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bionic Brand OS
 
-## Getting Started
+An operational portal for Bionic Branding. Every brand hosted here becomes a living interface between human emotion and machine clarity.
 
-First, run the development server:
+> Essence, narrative, identity for humans. Structure, context, tokens, prompts and agents for machines.
+
+Pilot client: **Betina Weber**.
+
+---
+
+## Stack
+
+- Next.js 16 (App Router, Turbopack, React 19.2)
+- TypeScript 5, Tailwind CSS 4
+- Anthropic SDK (Claude Sonnet 4.6 with prompt caching)
+- Groq SDK (Llama 3.3 70B, free-tier fallback)
+- Upstash Redis for rate limiting
+- Deployed on Vercel
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local   # fill in Anthropic and/or Groq keys
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Portal (TAG chrome)
 
-## Learn More
+| Route | Purpose |
+|---|---|
+| `/` | Home institucional da TAG |
+| `/manifesto` | Manifesto do Bionic Branding |
+| `/clients` | Lista de brand spaces hospedados |
 
-To learn more about Next.js, take a look at the following resources:
+### Client space (theme per client)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Route | Layer | Source |
+|---|---|---|
+| `/[client]` | Overview | `manifest.json`, `brand-system.json` |
+| `/[client]/essence` | Layer 1 · Strategic core | `brand-system.json` → `core` |
+| `/[client]/method` | Layer 1.x · Proprietary method | `brand-system.json` → `method` |
+| `/[client]/architecture` | Layer 2 · Brand architecture | `brand-system.json` → `architecture` |
+| `/[client]/audience` | Layer 3 · Audience | `brand-system.json` → `audience` |
+| `/[client]/verbal` | Layer 4 · Verbal system | `brand-system.json` → `verbal` |
+| `/[client]/visual` | Layer 5 · Visual system | `design-tokens.json` |
+| `/[client]/application` | Layer 6 · Application matrix | `brand-system.json` → `applicationMatrix`, `templates`, `pieceValidation` |
+| `/[client]/governance` | Layer 7 · Governance & evolution | `brand-system.json` → `governance` |
+| `/[client]/assets` | Transversal · Assets & API | Static |
+| `/[client]/agent` | Transversal · Conversational Brand Agent | `brand-agent-master.md` as system prompt |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Brand API (public, rate-limited)
 
-## Deploy on Vercel
+| Route | Format |
+|---|---|
+| `GET /api/[client]/brand-system` | JSON |
+| `GET /api/[client]/tokens` | JSON (design tokens) |
+| `GET /api/[client]/prompt` | Markdown (distilled prompt) |
+| `GET /api/[client]/prompt?flavor=master` | Markdown (operational master prompt) |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Limit: 60 req/min per IP. Disabled locally when Upstash env vars are absent.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Chat API (streaming)
+
+`POST /api/chat` — body `{ clientSlug, messages, apiKey? }`, returns `text/plain` stream.
+
+Provider priority: BYOK Anthropic → TAG pool Anthropic → Groq fallback.
+
+Limit: 20 req/h per IP (when enabled).
+
+## Content model
+
+Canonical brand documents for each client live in `content/clients/<slug>/`:
+
+```
+content/clients/betina-weber/
+├── manifest.json
+├── brand-system.json
+├── brand-system.md
+├── design-system.md
+├── design-tokens.json
+├── brand-prompt.md
+└── brand-agent-master.md
+```
+
+These are synced from the parent TAG Brandbook folder. See `content/README.md`.
+
+## Design tokens and theming
+
+- Root (`:root`): neutral TAG chrome theme.
+- Per-client (e.g. `.theme-betina`): full palette and typography override.
+
+Adding a new client:
+
+1. Create `content/clients/<slug>/` with the six canonical files.
+2. Add the slug to the registry in `lib/content.ts`.
+3. Add a CSS theme block in `app/globals.css`.
+4. Reference the `thematicClass` in the client's `manifest.json`.
+
+## Deployment
+
+```bash
+vercel link
+vercel --prod
+```
+
+Set env vars in the Vercel dashboard:
+
+- `ANTHROPIC_API_KEY` (pool key for visitors who don't BYOK)
+- `GROQ_API_KEY` (fallback)
+- `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` (rate limit)
+- `NEXT_PUBLIC_SITE_URL`
+
+## Roadmap
+
+- **v1.0 (current).** Pilot with Betina Weber. Public portal. Brand Agent via chat.
+- **v1.1.** Magic link auth (Resend). Private sections (full Brand API, governance-only docs).
+- **v1.2.** Upload/download of assets. Version diff viewer.
+- **v1.3.** Second client onboarded. Multi-tenant auth groups.
+- **v2.0.** CMS migration for content editing outside git.
+
+---
+
+_Clareza estratégica para crescimento sustentável. Strategic clarity for sustainable growth._
