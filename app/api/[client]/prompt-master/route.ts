@@ -1,3 +1,14 @@
+// GET /api/{client}/prompt-master
+//
+// System prompt operacional completo do Brand Agent (Markdown). Versão
+// pesada — pra alimentar agentes externos persistentes:
+//   - ChatGPT Custom GPT → cole em "Instructions"
+//   - Claude Project → "Project knowledge" / "Project instructions"
+//   - Cursor → cole em .cursorrules
+//   - API direta → use como `system` em todas as chamadas
+//
+// Pra contexto leve em tarefas pontuais, use /api/{client}/prompt.
+
 import type { NextRequest } from "next/server";
 
 import { isClientSlug, loadMarkdown, type ClientSlug } from "@/lib/content";
@@ -5,29 +16,10 @@ import { brandApiLimiter, clientIp } from "@/lib/rate-limit";
 
 type Ctx = { params: Promise<{ client: string }> };
 
-/**
- * GET /api/{client}/prompt
- * Brand prompt destilado (Markdown). Pílula leve de contexto pra colar em
- * IA (Claude, GPT, Cursor, Figma AI) quando precisar dar conhecimento da
- * marca pra uma tarefa pontual.
- *
- * Pra system prompt operacional (versão pesada), use /api/{client}/prompt-master.
- *
- * Compat: ?flavor=master ainda redireciona pra prompt-master por enquanto.
- */
 export async function GET(req: NextRequest, { params }: Ctx) {
   const { client: slug } = await params;
   if (!isClientSlug(slug)) {
     return Response.json({ error: "unknown client" }, { status: 404 });
-  }
-
-  // Compat: ?flavor=master → 308 pra rota nova.
-  const flavor = req.nextUrl.searchParams.get("flavor");
-  if (flavor === "master") {
-    return Response.redirect(
-      new URL(`/api/${slug}/prompt-master`, req.url).toString(),
-      308,
-    );
   }
 
   const ip = clientIp(req.headers);
@@ -39,7 +31,7 @@ export async function GET(req: NextRequest, { params }: Ctx) {
     );
   }
 
-  const text = await loadMarkdown(slug as ClientSlug, "brand-prompt");
+  const text = await loadMarkdown(slug as ClientSlug, "brand-agent-master");
 
   return new Response(text, {
     headers: {

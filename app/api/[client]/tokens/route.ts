@@ -1,30 +1,26 @@
+// LEGACY: /api/{client}/tokens → redirect 308 para /api/{client}/design.md
+//
+// Manteve o endpoint antigo (que servia design-tokens.json puro) como atalho
+// pro endpoint novo no formato DESIGN.md (Google alpha spec). Quem ainda
+// consome a URL antiga continua funcionando — recebe 308 Permanent Redirect.
+//
+// Pra acessar o JSON cru original sem redirect, use diretamente o ZIP
+// {slug}-design-tokens.zip ou /content/clients/{slug}/design-tokens.json.
+
 import type { NextRequest } from "next/server";
 
-import { getClient, isClientSlug } from "@/lib/content";
-import { brandApiLimiter, clientIp } from "@/lib/rate-limit";
+import { isClientSlug } from "@/lib/content";
 
 type Ctx = { params: Promise<{ client: string }> };
 
-export async function GET(req: NextRequest, { params }: Ctx) {
+export async function GET(_req: NextRequest, { params }: Ctx) {
   const { client: slug } = await params;
   if (!isClientSlug(slug)) {
-    return Response.json({ error: "unknown client" }, { status: 404 });
+    return new Response("unknown client", { status: 404 });
   }
 
-  const ip = clientIp(req.headers);
-  const rl = await brandApiLimiter.limit(`${slug}:${ip}`);
-  if (!rl.success) {
-    return Response.json(
-      { error: "rate_limited", limit: rl.limit, reset: rl.reset },
-      { status: 429 },
-    );
-  }
-
-  const client = getClient(slug)!;
-  return Response.json(client.tokens, {
-    headers: {
-      "Cache-Control": "public, max-age=300",
-      "X-RateLimit-Remaining": String(rl.remaining),
-    },
-  });
+  return Response.redirect(
+    new URL(`/api/${slug}/design.md`, _req.url).toString(),
+    308,
+  );
 }
