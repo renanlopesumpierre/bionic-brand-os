@@ -61,29 +61,61 @@ export default async function AssetsPage({ params }: Props) {
     },
   ];
 
+  // Todos os ZIPs aqui contêm um LEIA-ME.pdf institucional gerado pelo BBO,
+  // explicando uso, regras e quando consultar a versão programática (API).
   const downloads: Array<{
     label: string;
+    description?: string;
     href?: string;
     filename?: string;
     format?: string;
     soon?: boolean;
   }> = [
     {
-      label: "Logotipos (SVG, PNG e símbolo animado)",
+      label: "Logotipos",
+      description: "SVG vetorial + PNG @4x + GIF animado, com manual de uso",
       href: `/clients/${slug}/downloads/${slug}-brand-assets.zip`,
       filename: `${slug}-brand-assets.zip`,
       format: "ZIP",
     },
     {
-      label: "Paleta completa (HEX, RGB, CMYK, WEB, PRINT)",
+      label: "Paleta de cores",
+      description:
+        "16 formatos (HEX, RGB, CMYK, web, mobile, Figma, Adobe), folha A4 imprimível e auditoria WCAG",
       href: `/clients/${slug}/downloads/${slug}-brand-colors.zip`,
       filename: `${slug}-brand-colors.zip`,
       format: "ZIP",
     },
     {
-      label: fontFamilies ? `Tipografia (${fontFamilies})` : "Tipografia",
+      label: "Tipografia",
+      description: fontFamilies
+        ? `${fontFamilies} em TTF e WOFF2, com guia de instalação`
+        : "Fontes em TTF e WOFF2, com guia de instalação",
       href: `/clients/${slug}/downloads/${slug}-brand-fonts.zip`,
       filename: `${slug}-brand-fonts.zip`,
+      format: "ZIP",
+    },
+    {
+      label: "Brand System",
+      description: "Sistema de marca estruturado (JSON + narrativa) + manual",
+      href: `/clients/${slug}/downloads/${slug}-brand-system.zip`,
+      filename: `${slug}-brand-system.zip`,
+      format: "ZIP",
+    },
+    {
+      label: "Design Tokens",
+      description:
+        "Tokens canônicos W3C-friendly (cores, tipografia, spacing) + manual",
+      href: `/clients/${slug}/downloads/${slug}-design-tokens.zip`,
+      filename: `${slug}-design-tokens.zip`,
+      format: "ZIP",
+    },
+    {
+      label: "Brand Prompts",
+      description:
+        "Dois prompts pra IAs (destilado + system master) com guia de uso",
+      href: `/clients/${slug}/downloads/${slug}-brand-prompts.zip`,
+      filename: `${slug}-brand-prompts.zip`,
       format: "ZIP",
     },
     {
@@ -154,18 +186,23 @@ export default async function AssetsPage({ params }: Props) {
                 key={item.label}
                 href={item.href}
                 download={item.filename}
-                className="border border-[--color-border] p-5 flex items-center justify-between gap-4 group hover:bg-[--color-bg-alt] transition-colors"
+                className="border border-[--color-border] p-5 flex flex-col gap-3 group hover:bg-[--color-bg-alt] transition-colors"
               >
-                <div className="min-w-0">
-                  <p className="truncate">{item.label}</p>
-                  <p className="mt-1 type-mono text-[--color-fg-faint] truncate">
-                    {item.filename}
-                  </p>
+                <div className="flex items-baseline justify-between gap-3">
+                  <p className="text-lg tracking-tight">{item.label}</p>
+                  <span className="type-mono text-[--color-fg-muted] flex items-center gap-2 shrink-0">
+                    {item.format}
+                    <Download className="w-4 h-4" />
+                  </span>
                 </div>
-                <span className="type-mono text-[--color-fg-muted] flex items-center gap-2 shrink-0">
-                  {item.format}
-                  <Download className="w-4 h-4" />
-                </span>
+                {item.description && (
+                  <p className="text-sm text-[--color-fg-muted] leading-snug">
+                    {item.description}
+                  </p>
+                )}
+                <p className="type-mono text-[--color-fg-faint] truncate mt-auto">
+                  {item.filename}
+                </p>
               </a>
             ),
           )}

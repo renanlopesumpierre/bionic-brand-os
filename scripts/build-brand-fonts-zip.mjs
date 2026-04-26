@@ -22,6 +22,8 @@ import { join, basename } from "path";
 import { execSync } from "child_process";
 import { tmpdir } from "os";
 
+import { mdToPdf, closeBrowser } from "./lib/pdf/index.mjs";
+
 const root = process.cwd();
 const clientsDir = join(root, "public", "clients");
 
@@ -50,6 +52,7 @@ if (slugs.length === 0) {
 }
 
 for (const slug of slugs) await buildFontsZipForClient(slug);
+await closeBrowser();
 
 async function buildFontsZipForClient(slug) {
   const downloadsDir = join(clientsDir, slug, "downloads");
@@ -61,13 +64,41 @@ async function buildFontsZipForClient(slug) {
   copyFileSync(metaPath, join(stage, "fonts-metadata.json"));
 
   const readme = [
-    `# ${meta.client} — Tipografia da marca`,
+    `# Tipografia — ${meta.client}`,
     "",
-    `Versão: ${meta.version ?? "—"}`,
+    `Versão ${meta.version ?? "—"} · gerado pelo Bionic Brand OS em ${new Date().toLocaleDateString("pt-BR")}.`,
     "",
-    "Cada família vem em duas versões:",
-    "- `ttf/` — um arquivo por peso, com todos os glyphs. Use no Figma, Adobe, ou instale no SO.",
-    "- `woff2/` — versões subsetted otimizadas para web. Carregue via `fontface.css`.",
+    `Este pacote contém as fontes oficiais da marca **${meta.client}** em dois formatos: \`.ttf\` (instalável no SO, abre em qualquer ferramenta) e \`.woff2\` (otimizado pra web).`,
+    "",
+    "---",
+    "",
+    "## Estrutura",
+    "",
+    "Cada família tem sua própria pasta com:",
+    "",
+    "- **`ttf/`** — um arquivo por peso, com todos os glyphs. Use no Figma, Adobe, ou **instale no sistema operacional** (Mac: clique 2x no arquivo → Instalar; Windows: clique direito → Instalar).",
+    "- **`woff2/`** — versões subsetted otimizadas pra web. Carregue via `fontface.css`.",
+    "- **`fontface.css`** — declarações `@font-face` prontas pra colar no projeto web.",
+    "",
+    "## Como usar",
+    "",
+    "### No Figma / Adobe / Sketch",
+    "1. Instale os `.ttf` no SO (Mac: Font Book; Windows: Painel de Controle → Fontes).",
+    "2. Reinicie a ferramenta de design.",
+    "3. As famílias aparecem no seletor de fontes.",
+    "",
+    "### No Microsoft Office (Word, PowerPoint)",
+    "1. Mesma instalação no SO.",
+    "2. **Atenção:** ao compartilhar o arquivo, embuta a fonte (Word: Arquivo → Opções → Salvar → Incorporar fontes) ou o destinatário verá fallback genérico.",
+    "",
+    "### No web (HTML/CSS)",
+    "1. Copie a pasta `woff2/` da família que quer pro projeto.",
+    "2. Cole o conteúdo do `fontface.css` no seu CSS principal (ou importe o arquivo).",
+    "3. Use no CSS: `font-family: \"NomeDaFonte\", -apple-system, sans-serif;`",
+    "",
+    "---",
+    "",
+    "## Famílias incluídas",
     "",
   ];
 
@@ -119,9 +150,34 @@ async function buildFontsZipForClient(slug) {
   readme.push(
     "---",
     "",
-    "Arquivos servidos diretamente do Google Fonts. Confira a licença de cada família no site de origem antes de redistribuir.",
+    "## Licença",
+    "",
+    "Arquivos servidos diretamente do Google Fonts (ou outra fonte indicada acima). Confira a licença de cada família no site de origem antes de redistribuir comercialmente. A maioria é Open Font License (OFL), que permite uso comercial e embed em produtos.",
+    "",
+    "---",
+    "",
+    "## Pacotes relacionados",
+    "",
+    `- **\`${slug}-brand-colors.zip\`** — paleta oficial em 16 formatos`,
+    `- **\`${slug}-brand-assets.zip\`** — logotipos (SVG, PNG, GIF)`,
+    `- **\`${slug}-brand-system.zip\`** — sistema de marca completo`,
+    "",
+    "---",
+    "",
+    "_Gerado pelo Bionic Brand OS._",
   );
-  writeFileSync(join(stage, "README.md"), readme.join("\n"));
+  const readmeMd = readme.join("\n");
+  writeFileSync(join(stage, "LEIA-ME.md"), readmeMd);
+
+  // PDF institucional do BBO.
+  const readmePdf = await mdToPdf(readmeMd, {
+    brand: meta.client,
+    title: "Tipografia",
+    subtitle: "Fontes oficiais da marca em TTF e WOFF2.",
+    eyebrow: "Bionic Brand OS · Tipografia",
+    docId: "Fontes",
+  });
+  writeFileSync(join(stage, "LEIA-ME.pdf"), readmePdf);
 
   const outZip = join(downloadsDir, `${slug}-brand-fonts.zip`);
   if (existsSync(outZip)) rmSync(outZip);
