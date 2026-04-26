@@ -16,6 +16,8 @@ import { execSync } from "child_process";
 import { tmpdir } from "os";
 import sharp from "sharp";
 
+import { mdToPdf, closeBrowser } from "./lib/pdf/index.mjs";
+
 const root = process.cwd();
 const clientsDir = join(root, "public", "clients");
 const contentClientsDir = join(root, "content", "clients");
@@ -54,6 +56,18 @@ if (slugs.length === 0) {
 }
 
 for (const slug of slugs) await buildColorsZipForClient(slug);
+await closeBrowser();
+
+// Escreve um .md e gera .pdf paralelo no mesmo path (substituindo extensão).
+// docOpts vai pra capa do PDF: { subtitle, docId, eyebrow, title }
+async function writeMdAndPdf(filepath, mdContent, manifest, docOpts = {}) {
+  writeFileSync(filepath, mdContent);
+  const pdf = await mdToPdf(mdContent, {
+    brand: manifest.name,
+    ...docOpts,
+  });
+  writeFileSync(filepath.replace(/\.md$/, ".pdf"), pdf);
+}
 
 // ============================================================
 // Main
@@ -101,7 +115,12 @@ async function buildColorsZipForClient(slug) {
   const contrastData = buildContrastMatrix(ctx);
 
   // === Raiz ===
-  writeFileSync(join(stage, "LEIA-ME-PRIMEIRO.md"), buildReadme(ctx));
+  await writeMdAndPdf(join(stage, "LEIA-ME-PRIMEIRO.md"), buildReadme(ctx), manifest, {
+    title: "Cores",
+    subtitle: "Mapa por papel — dono(a) da marca, designer, gráfica, dev, IA.",
+    eyebrow: "Bionic Brand OS · Pacote de cores",
+    docId: "00 · LEIA-ME",
+  });
 
   // === 01 — Para aprovar e decidir ===
   const overviewSvg = buildSwatchSvg(ctx);
@@ -114,20 +133,38 @@ async function buildColorsZipForClient(slug) {
   } catch (err) {
     console.warn(`  ! PNG não gerado: ${err.message}`);
   }
-  writeFileSync(join(F1, "Como aprovar uma peça.md"), buildBrandOwnerGuide(ctx));
-  writeFileSync(join(F1, "Regras do accent.md"), buildAccentRulesDoc(ctx));
-  writeFileSync(join(F1, "Histórico das decisões cromáticas.md"), buildRationaleDoc(ctx));
+  await writeMdAndPdf(join(F1, "Como aprovar uma peça.md"), buildBrandOwnerGuide(ctx), manifest, {
+    subtitle: "Pra quem é dono da marca, aprova peças ou contrata fornecedor.",
+    docId: "01 · Aprovação editorial",
+  });
+  await writeMdAndPdf(join(F1, "Regras do accent.md"), buildAccentRulesDoc(ctx), manifest, {
+    subtitle: "Protocolo estrito da única cor de acento da marca.",
+    docId: "01 · Accent",
+  });
+  await writeMdAndPdf(join(F1, "Histórico das decisões cromáticas.md"), buildRationaleDoc(ctx), manifest, {
+    subtitle: "Caminhos rejeitados e o caminho adotado.",
+    docId: "01 · Histórico",
+  });
 
   // === 02 — Para design ===
   // Adobe
   writeFileSync(join(F2_ADOBE, `${brandFn}.ase`), buildAse(ctx));
-  writeFileSync(join(F2_ADOBE, "Como importar no Adobe.md"), buildAdobeHowto(ctx));
+  await writeMdAndPdf(join(F2_ADOBE, "Como importar no Adobe.md"), buildAdobeHowto(ctx), manifest, {
+    subtitle: "Illustrator, Photoshop, InDesign, After Effects.",
+    docId: "02 · Adobe",
+  });
   // Figma
   writeFileSync(join(F2_FIGMA, `${slug}.tokens.json`), buildFigmaTokens(ctx));
-  writeFileSync(join(F2_FIGMA, "Como importar no Figma.md"), buildFigmaHowto(ctx));
+  await writeMdAndPdf(join(F2_FIGMA, "Como importar no Figma.md"), buildFigmaHowto(ctx), manifest, {
+    subtitle: "Via plugin Tokens Studio for Figma.",
+    docId: "02 · Figma",
+  });
   // GIMP / Inkscape / Krita
   writeFileSync(join(F2_GIMP, `${brandFn}.gpl`), buildGpl(ctx));
-  writeFileSync(join(F2_GIMP, "Como importar.md"), buildGimpHowto(ctx));
+  await writeMdAndPdf(join(F2_GIMP, "Como importar.md"), buildGimpHowto(ctx), manifest, {
+    subtitle: "GIMP, Inkscape, Krita.",
+    docId: "02 · Open-source",
+  });
   // Swatches individuais — numerados, com label humano
   let i = 1;
   for (const c of palette) {
@@ -138,7 +175,10 @@ async function buildColorsZipForClient(slug) {
   }
 
   // === 03 — Para impressão (gráfica) ===
-  writeFileSync(join(F3, "LEIA PRIMEIRO — Para a gráfica.md"), buildPrintSpec(ctx));
+  await writeMdAndPdf(join(F3, "LEIA PRIMEIRO — Para a gráfica.md"), buildPrintSpec(ctx), manifest, {
+    subtitle: "Documento pra entregar ao operador de impressão.",
+    docId: "03 · Gráfica",
+  });
   const printSvg = buildPrintSheetSvg(ctx);
   writeFileSync(join(F3, "Folha de cores A4 (pronta pra imprimir).svg"), printSvg);
   try {
@@ -158,31 +198,51 @@ async function buildColorsZipForClient(slug) {
   writeFileSync(join(F4_WEB, "cores.less"), buildLess(ctx));
   writeFileSync(join(F4_WEB, "cores-tailwind-v4.css"), buildTailwindV4(ctx));
   writeFileSync(join(F4_WEB, "cores-tailwind-v3.config.js"), buildTailwind(ctx));
-  writeFileSync(join(F4_WEB, "Como usar.md"), buildWebHowto(ctx));
+  await writeMdAndPdf(join(F4_WEB, "Como usar.md"), buildWebHowto(ctx), manifest, {
+    subtitle: "CSS, SCSS, LESS, Tailwind v3 e v4.",
+    docId: "04 · Web",
+  });
   // iOS
   writeFileSync(join(F4_IOS, `${nsKt}.swift`), buildIosSwift(ctx));
-  writeFileSync(join(F4_IOS, "Como usar.md"), buildIosHowto(ctx));
+  await writeMdAndPdf(join(F4_IOS, "Como usar.md"), buildIosHowto(ctx), manifest, {
+    subtitle: "SwiftUI, UIKit.",
+    docId: "04 · iOS",
+  });
   // Android
   writeFileSync(join(F4_ANDROID, "colors.xml"), buildAndroidXml(ctx));
   writeFileSync(join(F4_ANDROID, `${nsKt}.kt`), buildComposeKt(ctx));
-  writeFileSync(join(F4_ANDROID, "Como usar.md"), buildAndroidHowto(ctx));
+  await writeMdAndPdf(join(F4_ANDROID, "Como usar.md"), buildAndroidHowto(ctx), manifest, {
+    subtitle: "XML (Views) e Jetpack Compose.",
+    docId: "04 · Android",
+  });
   // Scripts
   writeFileSync(join(F4_SCRIPTS, "colors.ts"), buildTs(ctx));
   writeFileSync(join(F4_SCRIPTS, "colors.js"), buildJs(ctx));
   writeFileSync(join(F4_SCRIPTS, "colors.py"), buildPython(ctx));
-  writeFileSync(join(F4_SCRIPTS, "Como usar.md"), buildScriptsHowto(ctx));
+  await writeMdAndPdf(join(F4_SCRIPTS, "Como usar.md"), buildScriptsHowto(ctx), manifest, {
+    subtitle: "TypeScript, JavaScript, Python.",
+    docId: "04 · Scripts",
+  });
   // Acessibilidade no nível 04 (porque é onde realmente importa)
   writeFileSync(
     join(F4, "Contraste WCAG (auditoria de acessibilidade).json"),
     JSON.stringify(contrastData, null, 2),
   );
-  writeFileSync(
+  await writeMdAndPdf(
     join(F4, "Contraste WCAG (relatório legível).md"),
     buildAccessibilityMd(ctx, contrastData),
+    manifest,
+    {
+      subtitle: "Auditoria de acessibilidade dos pares texto × superfície.",
+      docId: "04 · WCAG",
+    },
   );
 
   // === 05 — Para IAs e automações ===
-  writeFileSync(join(F5, "Cole isso no prompt da IA.md"), buildAiContext(ctx));
+  await writeMdAndPdf(join(F5, "Cole isso no prompt da IA.md"), buildAiContext(ctx), manifest, {
+    subtitle: "Bloco compacto pra colar em prompts (Claude, GPT, Cursor, Figma AI).",
+    docId: "05 · IA",
+  });
   writeFileSync(
     join(F5, "paleta-canônica (todos os formatos).json"),
     buildPaletteJson(ctx),

@@ -54,8 +54,8 @@ body {
   line-height: 1.55;
   color: var(--bbo-ink);
   background: #FFFFFF;
-  /* Respiro abaixo da faixa preta do header. */
-  padding-top: 8mm;
+  /* Respiro entre faixa preta do header e conteúdo vem do margin.top do
+     PDF (definido em render.mjs), não daqui — assim toda página ganha. */
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }

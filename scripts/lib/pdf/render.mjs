@@ -84,10 +84,11 @@ export async function renderToPdf(html, options = {}) {
     const pdf = await page.pdf({
       format: options.format ?? "A4",
       margin: {
-        // Top reservado integralmente pra faixa preta do header (sem respiro
-        // branco entre faixa e topo; o padding interno do header empurra o
-        // texto pra baixo). Conteúdo do PDF ganha respiro extra via theme.css.
-        top: options.margin?.top ?? "22mm",
+        // Top: 30mm reservado, dos quais ~22mm são a faixa preta do header
+        // (com margin-top -10mm pra estourar a safe area do Chrome) e ~8mm
+        // ficam como respiro branco entre faixa e o conteúdo da página.
+        // Mesmo respiro vale pra TODAS as páginas (não só a 1ª).
+        top: options.margin?.top ?? "30mm",
         right: options.margin?.right ?? "22mm",
         bottom: options.margin?.bottom ?? "22mm",
         left: options.margin?.left ?? "22mm",
