@@ -1,0 +1,272 @@
+/* ============================================================
+   BIONIC BRAND OS — PDF design system
+   ============================================================
+   Fonte de verdade visual de TODOS os PDFs gerados pelo BBO.
+   Cores, tipografia, espaçamentos, layout — refletindo o chrome
+   TAG/BBO definido em app/globals.css.
+
+   Princípio: este CSS é cliente-agnóstico. Identidade da marca
+   cliente entra como CONTEÚDO dentro do PDF (cores citadas,
+   amostras visuais), não no chrome.
+   ============================================================ */
+
+/* === Tipografia — BDO Grotesk embutida via base64 (substituída
+       em runtime por render.mjs) + IBM Plex Mono via Google. === */
+@font-face {
+  font-family: "BDO Grotesk";
+  src: url("__BDO_GROTESK_DATA_URI__") format("truetype-variations"),
+       url("__BDO_GROTESK_DATA_URI__") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap");
+
+/* === Variáveis (paleta acromática TAG) === */
+:root {
+  --bbo-canvas: #F2F2F2;
+  --bbo-card-grey: #EDEDED;
+  --bbo-line: #D1D1D1;
+  --bbo-mid-grey: #828282;
+  --bbo-ink: #111111;
+  --bbo-warm-white: #FAF9F5;
+  --bbo-bg-elevated: #FFFFFF;
+
+  --bbo-font-display: "BDO Grotesk", -apple-system, "Segoe UI", sans-serif;
+  --bbo-font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+
+/* === Reset enxuto === */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+img, svg { max-width: 100%; height: auto; }
+
+/* === Página A4 (controlado por Puppeteer pdf options também) === */
+@page {
+  size: A4;
+}
+
+/* === Body === */
+body {
+  font-family: var(--bbo-font-display);
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: var(--bbo-ink);
+  background: #FFFFFF;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* === Hierarquia tipográfica === */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--bbo-font-display);
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 1.8em 0 0.6em;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+h1 {
+  font-size: 32pt;
+  font-weight: 200;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-top: 0;
+}
+h2 {
+  font-size: 22pt;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  border-top: 1px solid var(--bbo-line);
+  padding-top: 1em;
+}
+h3 {
+  font-size: 16pt;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+h4, h5, h6 {
+  font-size: 12pt;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* === Parágrafo === */
+p {
+  margin: 0 0 0.8em;
+  max-width: 65ch;
+}
+
+/* === Strong / em === */
+strong, b { font-weight: 600; color: var(--bbo-ink); }
+em, i { font-style: italic; }
+
+/* === Links === */
+a {
+  color: var(--bbo-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--bbo-line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+/* === Listas === */
+ul, ol {
+  margin: 0.5em 0 1em;
+  padding-left: 1.2em;
+}
+li {
+  margin: 0.3em 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+li > p { margin: 0; }
+
+/* === Código inline === */
+code {
+  font-family: var(--bbo-font-mono);
+  font-size: 0.88em;
+  background: var(--bbo-card-grey);
+  padding: 0.1em 0.4em;
+  border-radius: 2px;
+  color: var(--bbo-ink);
+}
+
+/* === Bloco de código === */
+pre {
+  font-family: var(--bbo-font-mono);
+  font-size: 8.5pt;
+  line-height: 1.5;
+  background: var(--bbo-card-grey);
+  border-left: 2px solid var(--bbo-ink);
+  padding: 12px 16px;
+  margin: 1em 0;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+/* === Blockquote === */
+blockquote {
+  margin: 1em 0;
+  padding: 0.4em 0 0.4em 1em;
+  border-left: 2px solid var(--bbo-line);
+  color: var(--bbo-mid-grey);
+  font-style: italic;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+blockquote p { max-width: none; }
+
+/* === Tabela === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 9.5pt;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--bbo-line);
+}
+th {
+  font-weight: 500;
+  font-size: 8pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--bbo-mid-grey);
+  border-bottom: 1px solid var(--bbo-ink);
+}
+
+/* === HR === */
+hr {
+  border: none;
+  border-top: 1px solid var(--bbo-line);
+  margin: 2em 0;
+}
+
+/* === Imagens === */
+img {
+  display: block;
+  margin: 1em 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* === Classes utilitárias do template === */
+.bbo-cover {
+  break-after: page;
+  page-break-after: always;
+  padding: 32mm 0 0;
+  min-height: 220mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.bbo-cover-eyebrow {
+  font-family: var(--bbo-font-mono);
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--bbo-mid-grey);
+}
+.bbo-cover-title {
+  font-size: 56pt;
+  font-weight: 200;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+  margin: 0.6em 0 0;
+  max-width: 14ch;
+}
+.bbo-cover-subtitle {
+  font-size: 14pt;
+  font-weight: 300;
+  color: var(--bbo-mid-grey);
+  margin: 1em 0 0;
+  max-width: 50ch;
+  line-height: 1.4;
+}
+.bbo-cover-meta {
+  font-family: var(--bbo-font-mono);
+  font-size: 8pt;
+  letter-spacing: 0.04em;
+  color: var(--bbo-mid-grey);
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  border-top: 1px solid var(--bbo-line);
+  padding-top: 12px;
+}
+.bbo-cover-logo {
+  width: 36px;
+  height: auto;
+  opacity: 0.6;
+}
+.bbo-cover-logo svg { width: 100%; height: auto; }
+
+/* === Eyebrow inline (sumário, separadores) === */
+.bbo-eyebrow {
+  font-family: var(--bbo-font-mono);
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--bbo-mid-grey);
+  margin: 0;
+}
+
+/* === Anti-orphan: títulos e parágrafo seguinte ficam juntos === */
+h1 + *, h2 + *, h3 + *, h4 + * { break-before: avoid; }
