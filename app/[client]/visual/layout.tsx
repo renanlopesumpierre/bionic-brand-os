@@ -18,13 +18,16 @@ const spectral = Spectral({
 export default function VisualLayout({ children }: { children: ReactNode }) {
   return (
     <div className={spectral.variable}>
-      {/* TASA Orbiter via Google Fonts CSS — Next move o <link> pro <head>. */}
+      {/* TASA Orbiter via Google Fonts CSS — Next move o <link> pro <head>.
+          Carregamento por-rota é INTENCIONAL: a fonte só serve à amostra
+          tipográfica desta página, não deve poluir o chrome do produto. */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link
         rel="preconnect"
         href="https://fonts.gstatic.com"
         crossOrigin=""
       />
+      {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400;500;700&display=swap"

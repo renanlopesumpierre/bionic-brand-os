@@ -9,7 +9,6 @@ import {
   writeFileSync,
   rmSync,
   readFileSync,
-  statSync,
 } from "fs";
 import { join, basename } from "path";
 import { execSync } from "child_process";
@@ -947,7 +946,7 @@ function buildBrandOwnerGuide(ctx) {
 }
 
 function buildAiContext(ctx) {
-  const { manifest, palette, tokens } = ctx;
+  const { manifest, palette } = ctx;
   const opaque = palette.filter((c) => !c.hasAlpha);
   return [
     `# Contexto cromático — ${manifest.name}`,
@@ -1303,8 +1302,8 @@ function buildGimpHowto(ctx) {
   ].join("\n");
 }
 
-function buildWebHowto(ctx) {
-  const { manifest } = ctx;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function buildWebHowto(_ctx) {
   return [
     `# Como usar as cores no front-end web`,
     "",
@@ -1447,7 +1446,8 @@ function buildAndroidHowto(ctx) {
   ].join("\n");
 }
 
-function buildScriptsHowto(ctx) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function buildScriptsHowto(_ctx) {
   return [
     `# Como usar as cores em scripts (JavaScript, TypeScript, Python)`,
     "",

@@ -210,6 +210,8 @@ export async function renderMarkdownToPdf(md, options = {}) {
   const html = options.html
     ? options.html(body)
     : `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>${body}</body></html>`;
-  const { html: _ignored, ...pdfOpts } = options;
+  // Strip `html` (custom wrapper) antes de passar pro renderToPdf.
+  const { html: _, ...pdfOpts } = options;
+  void _;
   return renderToPdf(html, pdfOpts);
 }

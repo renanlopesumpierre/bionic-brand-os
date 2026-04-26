@@ -25,7 +25,6 @@ function slugify(text) {
 
 // Renderer customizado: adicionar id em headings.
 const renderer = new marked.Renderer();
-const baseHeading = renderer.heading.bind(renderer);
 renderer.heading = (token) => {
   const text = token.text || token.raw || "";
   const id = slugify(text);
